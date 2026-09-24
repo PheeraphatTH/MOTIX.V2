@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Zap,
   Mail,
@@ -12,12 +12,19 @@ import {
   AlertCircle,
   Car,
   Bike,
+  ShieldCheck,
+  ShoppingBag,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const redirectTarget = searchParams.get('redirect') || '/';
+  const isFromCheckout = redirectTarget.includes('checkout');
+
   const { loginUser, registeredUsers } = useCart();
   const [email, setEmail] = useState('somchai@motix.com');
   const [password, setPassword] = useState('password123');
@@ -46,7 +53,7 @@ export const Login = () => {
       setIsLoading(false);
 
       if (res && res.success) {
-        navigate('/');
+        navigate(redirectTarget);
       } else {
         setErrorMessage(res?.message || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง');
       }
@@ -59,7 +66,7 @@ export const Login = () => {
     setErrorMessage('');
     const res = loginUser({ email: targetEmail, password: targetPassword });
     if (res && res.success) {
-      navigate('/');
+      navigate(redirectTarget);
     }
   };
 
@@ -67,6 +74,19 @@ export const Login = () => {
     <div className="min-h-screen bg-[#0B0D12] py-12 sm:py-20 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-[#121622] border border-[#262F42] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
+        {/* Checkout Alert Banner if redirected from checkout */}
+        {isFromCheckout && (
+          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-red-950/70 to-[#1C1318] border border-[#E63946]/50 space-y-1 animate-in fade-in">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#FF8A8A]">
+              <ShoppingBag className="w-4 h-4 text-[#E63946]" />
+              <span>กรุณาเข้าสู่ระบบก่อนสั่งซื้อสินค้า</span>
+            </div>
+            <p className="text-[11px] text-slate-300">
+              MOTIX กำหนดให้สมาชิกสั่งซื้อเพื่อผูกประกันอะไหล่แท้, สะสมแต้ม, และรับอีเมลยืนยันคำสั่งซื้อ
+            </p>
+          </div>
+        )}
+
         {/* Logo & Title */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#E63946] to-[#9A031E] text-white shadow-lg mb-1">
@@ -76,7 +96,9 @@ export const Login = () => {
             เข้าสู่ระบบ MOTIX Club
           </h1>
           <p className="text-xs text-slate-400">
-            ยินดีต้อนรับกลับสู่ศูนย์รวมอะไหล่ยานยนต์คุณภาพ
+            {isFromCheckout 
+              ? 'เข้าสู่ระบบเพื่อดำเนินการสั่งซื้อต่อทันที' 
+              : 'ยินดีต้อนรับกลับสู่ศูนย์รวมอะไหล่ยานยนต์คุณภาพ'}
           </p>
         </div>
 
@@ -193,7 +215,10 @@ export const Login = () => {
         {/* Register Link */}
         <div className="pt-4 border-t border-[#1C2230] text-center text-xs text-slate-400">
           ยังไม่มีบัญชีสมาชิก?{' '}
-          <Link to="/register" className="text-[#FF6B6B] hover:underline font-bold">
+          <Link 
+            to={isFromCheckout ? `/register?redirect=${encodeURIComponent(redirectTarget)}` : '/register'} 
+            className="text-[#FF6B6B] hover:underline font-bold"
+          >
             สมัครสมาชิกใหม่ รับ 100 แต้มฟรี
           </Link>
         </div>

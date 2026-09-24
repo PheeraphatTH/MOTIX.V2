@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Zap,
   Mail,
@@ -29,6 +29,11 @@ import { MotixBrandLogo } from '../components/common/MotixBrandLogo';
 
 export const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const redirectTarget = searchParams.get('redirect') || '/';
+  const isFromCheckout = redirectTarget.includes('checkout');
+
   const { registerUser } = useCart();
 
   const [form, setForm] = useState({
@@ -263,6 +268,18 @@ export const Register = () => {
 
           {/* Action Buttons */}
           <div className="space-y-2.5">
+            {isFromCheckout ? (
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => navigate(redirectTarget)}
+                icon={ShoppingBag}
+                className="w-full shadow-xl shadow-red-950/60 text-sm font-bold bg-gradient-to-r from-[#E63946] to-[#C1121F]"
+              >
+                🛒 ดำเนินการสั่งซื้อสินค้าต่อ (ไปที่หน้าชำระเงิน)
+              </Button>
+            ) : null}
+
             <button
               type="button"
               onClick={() => setShowPreviewModal(true)}
@@ -274,7 +291,7 @@ export const Register = () => {
 
             <div className="flex flex-col sm:flex-row gap-2.5">
               <Button
-                variant="primary"
+                variant={isFromCheckout ? "outline" : "primary"}
                 size="md"
                 onClick={() => navigate('/products')}
                 icon={ShoppingBag}
@@ -316,6 +333,19 @@ export const Register = () => {
     <div className="min-h-screen bg-[#0B0D12] py-10 sm:py-16 flex items-center justify-center px-4">
       <div className="w-full max-w-lg bg-[#121622] border border-[#262F42] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
+        {/* Checkout Alert Banner if redirected from checkout */}
+        {isFromCheckout && (
+          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-red-950/70 to-[#1C1318] border border-[#E63946]/50 space-y-1 animate-in fade-in">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#FF8A8A]">
+              <ShoppingBag className="w-4 h-4 text-[#E63946]" />
+              <span>สมัครสมาชิกเพื่อทำการสั่งซื้อสินค้า</span>
+            </div>
+            <p className="text-[11px] text-slate-300">
+              สร้างบัญชีสมาชิกฟรีเพื่อบันทึกประวัติการสั่งซื้อ รับประกันสินค้าแท้ 100% พร้อมรับแต้มสะสมทันที
+            </p>
+          </div>
+        )}
+
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#E63946] to-[#9A031E] text-white shadow-lg mb-1">
@@ -553,7 +583,10 @@ export const Register = () => {
         {/* Login Link */}
         <div className="pt-4 border-t border-[#1C2230] text-center text-xs text-slate-400">
           มีบัญชีสมาชิกอยู่แล้ว?{' '}
-          <Link to="/login" className="text-[#FF6B6B] hover:underline font-bold">
+          <Link 
+            to={isFromCheckout ? `/login?redirect=${encodeURIComponent(redirectTarget)}` : '/login'} 
+            className="text-[#FF6B6B] hover:underline font-bold"
+          >
             เข้าสู่ระบบที่นี่
           </Link>
         </div>

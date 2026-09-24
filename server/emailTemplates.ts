@@ -83,30 +83,37 @@ export function buildStoreLink(rawBaseUrl?: string, path: string = ''): string {
 }
 
 // ============================================================================
-// 1. BRAND HEADER & LOGO COMPONENT (Pure HTML/CSS - With direct link to store)
+// 1. BRAND HEADER & LOGO COMPONENT (Bulletproof HTML/CSS for 100% Gmail Support)
 // ============================================================================
 export function renderBrandHeaderHtml(rightBadgeText: string = 'VIP MOTORSPORT CLUB', storeUrl: string = DEFAULT_STORE_URL): string {
   const homeUrl = buildStoreLink(storeUrl, '');
   const targetUrl = buildStoreLink(storeUrl, 'products');
 
   return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 16px 22px; background-color: #0A0D14; border-bottom: 1px solid #161D2A;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 16px 20px; background-color: #0A0D14; border-bottom: 1px solid #161D2A;">
       <tr>
         <td valign="middle" align="left">
           <a href="${homeUrl}" target="_blank" style="text-decoration: none; display: inline-block;">
             <table cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td style="padding-right: 12px; vertical-align: middle;">
-                  <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #E63946 0%, #9A031E 100%); text-align: center; line-height: 38px; font-size: 20px; box-shadow: 0 4px 14px rgba(230, 57, 70, 0.45); color: #FFFFFF;">
-                    ⚡
-                  </div>
+                  <!-- MOTIX Official Automotive Carbon Racing Badge (Pure HTML/CSS - Gmail Safe 100%) -->
+                  <table cellpadding="0" cellspacing="0" border="0" style="background: linear-gradient(145deg, #1E2536 0%, #0D111A 100%); border: 1.5px solid #E63946; border-radius: 10px; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.45);">
+                    <tr>
+                      <td style="padding: 6px 10px; text-align: center; vertical-align: middle;">
+                        <span style="font-family: 'Arial Black', Impact, sans-serif; font-size: 13px; font-weight: 900; color: #FFFFFF; letter-spacing: 1px; display: block; line-height: 1;">
+                          🏎️ <span style="color: #FF6B6B;">RPM</span>
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
                 <td style="vertical-align: middle;">
-                  <div style="font-family: 'Arial Black', Impact, sans-serif; font-size: 26px; font-weight: 900; color: #FFFFFF; line-height: 1; letter-spacing: -0.5px;">
-                    MOTI<span style="color: #E63946;">X</span>
+                  <div style="font-family: 'Arial Black', Impact, 'Segoe UI Black', sans-serif; font-size: 26px; font-weight: 900; color: #FFFFFF; line-height: 1; letter-spacing: -0.5px;">
+                    <span style="color: #FFFFFF;">MOTI</span><span style="color: #E63946;">X</span>
                   </div>
-                  <div style="font-size: 10px; font-weight: 800; font-style: italic; color: #CBD5E1; letter-spacing: 1.2px; margin-top: 2px;">
-                    Keep Your Ride Moving.
+                  <div style="font-size: 10px; font-weight: 800; font-style: italic; color: #94A3B8; letter-spacing: 1.5px; margin-top: 3px; text-transform: uppercase;">
+                    KEEP YOUR RIDE MOVING.
                   </div>
                 </td>
               </tr>
@@ -115,9 +122,9 @@ export function renderBrandHeaderHtml(rightBadgeText: string = 'VIP MOTORSPORT C
         </td>
         <td valign="middle" align="right">
           <a href="${targetUrl}" target="_blank" style="text-decoration: none; display: inline-block;">
-            <div style="background-color: #121824; border: 1px solid rgba(230, 57, 70, 0.4); border-radius: 20px; padding: 5px 12px;">
+            <div style="background-color: #121824; border: 1px solid rgba(230, 57, 70, 0.5); border-radius: 20px; padding: 6px 14px;">
               <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #22C55E; margin-right: 5px; vertical-align: middle;"></span>
-              <span style="font-size: 11px; font-weight: 800; color: #E2E8F0;">${rightBadgeText} &rarr;</span>
+              <span style="font-size: 11px; font-weight: 800; color: #F1F5F9;">${rightBadgeText} &rarr;</span>
             </div>
           </a>
         </td>
@@ -375,6 +382,11 @@ export function generateSubscribeEmailHtml(toEmail: string, customStoreUrl?: str
   </style>
 </head>
 <body style="margin: 0; padding: 0; background-color: #05070B;">
+  <!-- Hidden Preheader for Clean Gmail Snippets (Zero Spam Triggers) -->
+  <div style="display: none; font-size: 1px; color: #05070B; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+    ขอบคุณที่ร่วมติดตามข่าวสาร MOTIX Auto Parts Store รับโค้ดส่วนลด 10% รหัส MOTIX-NEWS10 สำหรับช้อปอะไหล่แท้ทุกรายการ
+  </div>
+
   <center style="width: 100%; table-layout: fixed; background-color: #05070B; padding: 24px 8px 40px 8px;">
     
     <!-- MAIN CONTAINER (600px Standard Email Width) -->
@@ -450,32 +462,48 @@ export function generateSubscribeEmailHtml(toEmail: string, customStoreUrl?: str
             </div>
 
             <!-- 🌐 DIRECT STORE ACCESS HIGHLIGHT BOX (ชัดเจนสำหรับลูกค้าคลิกกลับหน้าร้าน) -->
-            <div style="background: linear-gradient(135deg, #121825 0%, #0A0E17 100%); border: 1.5px solid #24324A; border-radius: 12px; padding: 16px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <div style="background: linear-gradient(135deg, #121825 0%, #0A0E17 100%); border: 1.5px solid #24324A; border-radius: 12px; padding: 16px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); text-align: left;">
+              <div style="font-size: 11px; font-weight: 800; color: #38BDF8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;">
+                🌐 ช่องทางเข้าสู่หน้าร้าน MOTIX (เลือกลิงก์ตามอุปกรณ์ของคุณ)
+              </div>
+              <div style="font-size: 15px; font-weight: 900; color: #FFFFFF; margin: 3px 0 8px 0;">
+                MOTIX Automotive Online Store
+              </div>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 8px;">
                 <tr>
-                  <td valign="middle">
-                    <div style="font-size: 10.5px; font-weight: 800; color: #38BDF8; letter-spacing: 1px; text-transform: uppercase;">
-                      🌐 ลิงก์ตรงกลับสู่เว็บไซต์ร้านค้า
+                  <td valign="top" style="padding-bottom: 8px;">
+                    <div style="font-size: 12px; font-weight: 800; color: #FFFFFF;">
+                      💻 หากเปิดบนคอมพิวเตอร์ของคุณ (Localhost: 3000):
                     </div>
-                    <div style="font-size: 15px; font-weight: 900; color: #FFFFFF; margin: 3px 0;">
-                      MOTIX Automotive Online Store
-                    </div>
-                    <div style="font-size: 11px; color: #94A3B8; margin-bottom: 6px;">
-                      เลือกซื้ออะไหล่แท้ ค้นหาตามรุ่นรถ หรือสั่งซื้อออนไลน์ได้ตลอด 24 ชั่วโมง
-                    </div>
-                    <div>
-                      <a href="${homeLink}" target="_blank" style="color: #38BDF8; font-size: 12.5px; font-weight: 800; text-decoration: underline; word-break: break-all;">
-                        🔗 ${homeLink}
+                    <div style="margin-top: 2px;">
+                      <a href="http://localhost:3000/#/" target="_blank" style="color: #38BDF8; font-family: monospace; font-size: 12px; font-weight: 700; text-decoration: underline;">
+                        http://localhost:3000/#/
                       </a>
+                      <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">(เปิดรันในระบบเครื่องคุณ)</span>
                     </div>
                   </td>
-                  <td width="130" align="right" valign="middle" style="padding-left: 12px;">
-                    <a href="${homeLink}" target="_blank" style="display: inline-block; background-color: #E63946; color: #FFFFFF; font-size: 12px; font-weight: 800; padding: 9px 16px; border-radius: 8px; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);">
-                      เปิดหน้าร้าน &rarr;
-                    </a>
+                </tr>
+                <tr>
+                  <td valign="top" style="padding-top: 6px; border-top: 1px dashed #1E283C;">
+                    <div style="font-size: 12px; font-weight: 800; color: #FFFFFF;">
+                      📱 หากเปิดบนสมาร์ทโฟน หรือเว็บออนไลน์:
+                    </div>
+                    <div style="margin-top: 2px;">
+                      <a href="${homeLink}" target="_blank" style="color: #22C55E; font-family: monospace; font-size: 12px; font-weight: 700; text-decoration: underline; word-break: break-all;">
+                        ${homeLink}
+                      </a>
+                      <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">(เปิดได้ทุกอุปกรณ์)</span>
+                    </div>
                   </td>
                 </tr>
               </table>
+
+              <div style="margin-top: 14px; text-align: center;">
+                <a href="${homeLink}" target="_blank" style="display: inline-block; background-color: #E63946; color: #FFFFFF; font-size: 12.5px; font-weight: 800; padding: 10px 24px; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);">
+                  🛒 เข้าสู่หน้าร้าน MOTIX ทันที &rarr;
+                </a>
+              </div>
             </div>
 
           </td>
@@ -677,6 +705,11 @@ export function generateRegisterEmailHtml(data: RegisterEmailData): string {
   </style>
 </head>
 <body style="margin: 0; padding: 0; background-color: #05070B;">
+  <!-- Hidden Preheader for Clean Gmail Snippets (Zero Spam Triggers) -->
+  <div style="display: none; font-size: 1px; color: #05070B; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+    ยินดีต้อนรับสู่ MOTIX Member Club - มอบสิทธิ์ส่วนลด 15% พร้อมบัตรสมาชิก Silver Racer ประจำตัวคุณ
+  </div>
+
   <center style="width: 100%; table-layout: fixed; background-color: #05070B; padding: 24px 8px 40px 8px;">
     
     <!-- MAIN CONTAINER (600px Standard Email Width) -->
@@ -934,15 +967,25 @@ export function generateOrderConfirmationEmailHtml(order: OrderEmailData): strin
   };
 
   const paymentLabelMap: Record<string, string> = {
-    promptpay: 'พร้อมเพย์ QR Code (ชำระเงินเรียบร้อย)',
-    credit_card: 'บัตรเครดิต / เดบิต (ชำระเงินเรียบร้อย)',
-    cod: 'เก็บเงินปลายทาง (COD) ชำระเมื่อรับของ',
+    promptpay: 'พร้อมเพย์ QR Code (PromptPay - ชำระเงินเรียบร้อย)',
+    bank_transfer: 'โอนเงินผ่านบัญชีธนาคาร (Bank Transfer - แนบสลิปเรียบร้อย)',
+    credit_card: 'บัตรเครดิต / เดบิต (Credit/Debit Card - ชำระเงินเรียบร้อย)',
+    cod: 'เก็บเงินปลายทาง (COD) - ชำระเงินเมื่อรับสินค้า',
+    truemoney: 'TrueMoney Wallet - ชำระเงินเรียบร้อย',
   };
   const paymentText = paymentLabelMap[order.paymentMethod || ''] || order.paymentMethod || 'ชำระเงินออนไลน์';
 
-  const shippingText = order.shippingMethod === 'sameday'
-    ? 'จัดส่งด่วนพิเศษ MOTIX Sameday (ได้รับภายในวันนี้)'
-    : 'ขนส่งด่วนมาตรฐาน Kerry / Flash Express (1-2 วันทำการ)';
+  const shippingLabelMap: Record<string, string> = {
+    flash: 'Flash Express (ขนส่งด่วนมาตรฐาน 1-2 วันทำการ)',
+    kerry: 'Kerry Express / KEX (พัสดุด่วนพรีเมียม 1-2 วันทำการ)',
+    ems: 'ไปรษณีย์ไทย EMS (ด่วนพิเศษครอบคลุมทั่วไทย 1-3 วัน)',
+    sameday: 'MOTIX Sameday Rider (ส่งด่วนภายในวัน ได้รับใน 3-6 ชม.)',
+    bulky: 'ขนส่งอะไหล่ชิ้นใหญ่พิเศษ (Bulky / Lalamove)',
+    pickup: 'รับสินค้าด้วยตนเองที่หน้าร้าน (MOTIX Garage & Service)',
+  };
+  const shippingText = shippingLabelMap[order.shippingMethod || ''] || (order.shippingMethod === 'sameday'
+    ? 'MOTIX Sameday Rider (ส่งด่วนในวัน)'
+    : 'ขนส่งด่วนมาตรฐาน Kerry / Flash Express (1-2 วันทำการ)');
 
   const itemsHtml = (order.items || []).map((item) => {
     const itemTotal = (item.price || 0) * (item.quantity || 1);
@@ -1002,6 +1045,11 @@ export function generateOrderConfirmationEmailHtml(order: OrderEmailData): strin
   </style>
 </head>
 <body style="margin: 0; padding: 16px 8px; background-color: #05070B;">
+  <!-- Hidden Preheader for Clean Gmail Snippets (Zero Spam Triggers) -->
+  <div style="display: none; font-size: 1px; color: #05070B; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+    ใบเสร็จคำสั่งซื้อ #${order.orderId} จาก MOTIX Auto Parts Store - สรุปรายการอะไหล่แท้และการจัดส่ง
+  </div>
+
   <center style="width: 100%; background-color: #05070B;">
     <div class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #0A0D14; border: 1px solid #1E2536; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.85); text-align: left;">
       
@@ -1013,13 +1061,24 @@ export function generateOrderConfirmationEmailHtml(order: OrderEmailData): strin
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="padding-right: 12px; vertical-align: middle;">
-                    <div style="width: 36px; height: 36px; background-color: #E63946; border-radius: 9px; text-align: center; line-height: 36px;">
-                      <span style="font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; font-size: 19px; color: #FFFFFF;">M</span>
-                    </div>
+                    <!-- MOTIX Official Automotive Carbon Racing Badge (Pure HTML/CSS - Gmail Safe 100%) -->
+                    <table cellpadding="0" cellspacing="0" border="0" style="background: linear-gradient(145deg, #1E2536 0%, #0D111A 100%); border: 1.5px solid #E63946; border-radius: 9px; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.45);">
+                      <tr>
+                        <td style="padding: 5px 9px; text-align: center; vertical-align: middle;">
+                          <span style="font-family: 'Arial Black', Impact, sans-serif; font-size: 12px; font-weight: 900; color: #FFFFFF; letter-spacing: 1px; display: block; line-height: 1;">
+                            🏎️ <span style="color: #FF6B6B;">RPM</span>
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                   <td style="vertical-align: middle;">
-                    <span style="font-family: 'Arial Black', Impact, sans-serif; font-size: 21px; font-weight: 900; letter-spacing: 0.5px; color: #FFFFFF;">MOTI<span style="color: #E63946;">X</span></span>
-                    <span style="display: block; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 1.5px; text-transform: uppercase;">ORDER RECEIPT</span>
+                    <div style="font-family: 'Arial Black', Impact, 'Segoe UI Black', sans-serif; font-size: 24px; font-weight: 900; color: #FFFFFF; line-height: 1; letter-spacing: -0.5px;">
+                      <span style="color: #FFFFFF;">MOTI</span><span style="color: #E63946;">X</span>
+                    </div>
+                    <div style="font-size: 9px; font-weight: 800; font-style: italic; color: #94A3B8; letter-spacing: 1.5px; margin-top: 3px; text-transform: uppercase;">
+                      OFFICIAL ORDER RECEIPT
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -1203,7 +1262,7 @@ export function generateOrderConfirmationEmailHtml(order: OrderEmailData): strin
         </table>
       </div>
 
-      <!-- PRIMARY STORE CTA BUTTON -->
+      <!-- PRIMARY STORE CTA & DIRECT ACCESS CHANNELS -->
       <div style="padding: 22px; text-align: center; background-color: #0A0D14; border-bottom: 1px solid #161D2A;">
         <div style="margin-bottom: 14px;">
           <a href="${productsLink}" 
@@ -1212,6 +1271,43 @@ export function generateOrderConfirmationEmailHtml(order: OrderEmailData): strin
             🛒 เลือกซื้ออะไหล่ชิ้นอื่นเพิ่มเติม &rarr;
           </a>
         </div>
+
+        <!-- 🌐 DUAL LINK STORE BOX (Localhost 3000 & Web Online) -->
+        <div style="background: linear-gradient(135deg, #101522 0%, #080A10 100%); border: 1.5px solid #1E283C; border-radius: 12px; padding: 16px; margin: 14px 0; text-align: left;">
+          <div style="font-size: 11px; font-weight: 800; color: #38BDF8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;">
+            🌐 เลือกลิงก์เพื่อเปิดหน้าร้าน MOTIX ตามอุปกรณ์ที่คุณใช้งาน:
+          </div>
+          
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 10px;">
+            <tr>
+              <td valign="top" style="padding-bottom: 8px;">
+                <div style="font-size: 12px; font-weight: 800; color: #FFFFFF;">
+                  💻 หากเปิดดูบนเครื่องคอมพิวเตอร์ของคุณ (Localhost):
+                </div>
+                <div style="margin-top: 2px;">
+                  <a href="http://localhost:3000/#/products" target="_blank" style="color: #38BDF8; font-family: monospace; font-size: 12px; text-decoration: underline; font-weight: 700;">
+                    http://localhost:3000/#/products
+                  </a>
+                  <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">(เปิดรันในเซิร์ฟเวอร์ Local)</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="padding-top: 6px; border-top: 1px dashed #1B2434;">
+                <div style="font-size: 12px; font-weight: 800; color: #FFFFFF;">
+                  📱 หากเปิดดูบนสมาร์ทโฟน หรือเบราว์เซอร์ออนไลน์:
+                </div>
+                <div style="margin-top: 2px;">
+                  <a href="${homeLink}" target="_blank" style="color: #22C55E; font-family: monospace; font-size: 12px; text-decoration: underline; font-weight: 700; word-break: break-all;">
+                    ${homeLink}
+                  </a>
+                  <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">(เปิดได้ทุกอุปกรณ์ ทุกที่)</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
         <div style="font-size: 11px; color: #64748B;">
           ต้องการความช่วยเหลือเกี่ยวกับคำสั่งซื้อนี้? ทัก LINE Official: <strong style="color: #06C755;">@motix</strong> (บริการ 24 ชม.)
         </div>

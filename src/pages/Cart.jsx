@@ -11,6 +11,9 @@ import {
   Check,
   Car,
   Bike,
+  Lock,
+  UserCheck,
+  Sparkles,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
@@ -30,6 +33,7 @@ export const Cart = () => {
     appliedCoupon,
     applyCoupon,
     removeCoupon,
+    user,
   } = useCart();
 
   const [couponInput, setCouponInput] = useState('');
@@ -314,16 +318,48 @@ export const Cart = () => {
                 </span>
               </div>
 
+              {/* Member Auth Requirement Box */}
+              {user ? (
+                <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-500/30 animate-pulse" />
+                    <div>
+                      <span className="text-white font-bold block">{user.name}</span>
+                      <span className="text-[10px] text-emerald-400 font-medium">เข้าสู่ระบบแล้ว • {user.tier || 'สมาชิก MOTIX'}</span>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    +{Math.floor(cartTotal / 50)} แต้ม
+                  </span>
+                </div>
+              ) : (
+                <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1.5 text-xs text-amber-200">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-300">
+                    <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>ต้องเข้าสู่ระบบก่อนสั่งซื้อ</span>
+                  </div>
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    ระบบกำหนดให้เข้าสู่ระบบหรือสมัครสมาชิกก่อน เพื่อผูกประวัติคำสั่งซื้อและรับประกันอะไหล่แท้
+                  </p>
+                </div>
+              )}
+
               {/* Checkout Button */}
               <Button
                 variant="primary"
                 size="lg"
-                icon={ArrowRight}
+                icon={user ? ArrowRight : Lock}
                 iconPosition="right"
-                onClick={() => navigate('/checkout')}
-                className="w-full shadow-lg shadow-red-950/60"
+                onClick={() => {
+                  if (!user) {
+                    navigate('/login?redirect=/checkout');
+                  } else {
+                    navigate('/checkout');
+                  }
+                }}
+                className="w-full shadow-lg shadow-red-950/60 font-bold"
               >
-                ดำเนินการสั่งซื้อ (Checkout)
+                {user ? 'ดำเนินการสั่งซื้อ (Checkout)' : 'เข้าสู่ระบบเพื่อสั่งซื้อสินค้า (Login to Order)'}
               </Button>
 
               <Link

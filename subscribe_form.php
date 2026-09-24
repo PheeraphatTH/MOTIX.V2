@@ -293,8 +293,10 @@
                 • การประมวลผล: ดำเนินการผ่านฟังก์ชัน <code>mail()</code> ของภาษา PHP
             </div>
 
-            <div style="text-align: center;">
-                <a href="/" class="back-link">← กลับไปยังหน้าร้านค้า MOTIX Store</a>
+            <div style="text-align: center; margin-top: 18px; display: flex; justify-content: center; gap: 14px;">
+                <a href="http://localhost:3000" class="back-link" style="color: #38BDF8; font-weight: 600;">💻 กลับหน้าร้านค้า (Localhost: 3000)</a>
+                <span style="color: #475569;">|</span>
+                <a href="/" class="back-link">🌐 หน้าร้านค้าหลัก</a>
             </div>
         </div>
     </div>

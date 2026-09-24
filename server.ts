@@ -81,7 +81,12 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
         from: `"MOTIX Auto Parts Store" <${SMTP_USER}>`,
         to: email.trim(),
         subject: 'ขอบคุณที่ติดตามข่าวสาร MOTIX! รับโค้ดส่วนลด 10% สำหรับคุณ',
+        text: `ยินดีต้อนรับสู่ MOTIX Auto Parts Store!\n\nขอบคุณที่ร่วมติดตามข่าวสารกับเรา คุณได้รับสิทธิ์ส่วนลด 10% ไม่มีขั้นต่ำ\nโค้ดส่วนลดของคุณ: MOTIX-NEWS10\n\nเข้าสู่หน้าร้านเพื่อเลือกซื้ออะไหล่แท้: ${detectedStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
         html: htmlContent,
+        headers: {
+          'List-Unsubscribe': `<mailto:${SMTP_USER}?subject=unsubscribe>`,
+          'X-Mailer': 'MOTIX Automotive System',
+        },
       });
       messageId = info.messageId;
       console.log(`[MOTIX Email] Subscribe email sent to ${email.trim()} (MsgID: ${info.messageId})`);
@@ -142,7 +147,12 @@ app.post('/api/auth/register-email', async (req: Request, res: Response) => {
         from: `"MOTIX Member Club" <${SMTP_USER}>`,
         to: email.trim(),
         subject: `ยินดีต้อนรับ${subjectGreeting}! บัตรสมาชิกดิจิทัลและคูปองต้อนรับ 15%`,
+        text: `ยินดีต้อนรับสู่ MOTIX Member Club!\n\nขอต้อนรับคุณ ${name || 'สมาชิก MOTIX'} สู่คลับคนรักรถยนต์และมอเตอร์ไซค์\nโค้ดส่วนลดสมาชิกใหม่ 15%: MOTIX-WELCOME15\n\nเข้าสู่หน้าร้านเพื่อเริ่มใช้งาน: ${detectedStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
         html: htmlContent,
+        headers: {
+          'List-Unsubscribe': `<mailto:${SMTP_USER}?subject=unsubscribe>`,
+          'X-Mailer': 'MOTIX Automotive System',
+        },
       });
       messageId = info.messageId;
       console.log(`[MOTIX Email] Register welcome email sent to ${email.trim()} (MsgID: ${info.messageId})`);
@@ -200,7 +210,11 @@ app.post('/api/order/confirmation-email', async (req: Request, res: Response) =>
         from: `"MOTIX Auto Parts Store" <${SMTP_USER}>`,
         to: email,
         subject: `[ใบเสร็จคำสั่งซื้อ #${order.orderId}] สรุปข้อมูลการสั่งซื้ออะไหล่ MOTIX Auto Parts`,
+        text: `ใบเสร็จคำสั่งซื้อ #${order.orderId} จาก MOTIX Auto Parts Store\n\nขอบคุณสำหรับการสั่งซื้ออะไหล่กับ MOTIX ยอดรวมทั้งสิ้น: ฿${order.total}\nตรวจสอบสถานะการสั่งซื้อได้ที่: ${originStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
         html: htmlContent,
+        headers: {
+          'X-Mailer': 'MOTIX Automotive System',
+        },
       });
       messageId = info.messageId;
       console.log(`[MOTIX Order Email] Confirmation email dispatched to ${email} for Order #${order.orderId} (MsgID: ${info.messageId})`);
@@ -509,9 +523,12 @@ app.post(['/sendMail.php', '/api/sendMail.php'], async (req: Request, res: Respo
             </div>
         </div>
 
-        <div class="btn-group">
-            <a href="/subscribe_form.php" class="btn btn-secondary">← กลับไปหน้าฟอร์ม</a>
-            <a href="/" class="btn btn-primary">เข้าสู่หน้าร้าน MOTIX</a>
+        <div class="btn-group" style="flex-direction: column; gap: 8px;">
+            <a href="http://localhost:3000" class="btn btn-primary" style="text-align: center;">💻 เข้าสู่หน้าร้าน MOTIX (Localhost: 3000)</a>
+            <div style="display: flex; gap: 8px;">
+                <a href="/subscribe_form.php" class="btn btn-secondary" style="text-align: center; flex: 1;">← กรอกอีเมลใหม่</a>
+                <a href="/#/products" class="btn btn-secondary" style="text-align: center; flex: 1; border-color: #38BDF8; color: #38BDF8;">🛒 ดูสินค้าอะไหล่</a>
+            </div>
         </div>
     </div>
 </div>
@@ -560,7 +577,7 @@ async function setupApp() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[MOTIX] Server listening on http://0.0.0.0:${PORT}`);
+    console.log(`[MOTIX] Server listening on http://localhost:${PORT}`);
   });
 }
 

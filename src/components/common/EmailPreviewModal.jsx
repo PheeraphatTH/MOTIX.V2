@@ -254,9 +254,13 @@ export const EmailPreviewModal = ({
         messageId: data.messageId,
       });
     } catch (err) {
+      const isNetworkErr = !err.status && (err.message?.includes('fetch') || err.message?.includes('Network') || err.name === 'TypeError');
       setSendResult({
         success: false,
-        message: `เกิดข้อผิดพลาดในการเชื่อมต่อ: ${err.message || 'Network Error'}`,
+        isGitHubPages: isGitHubPages,
+        message: isGitHubPages && isNetworkErr
+          ? '⚠️ บน GitHub Pages เป็น Static Hosting (ไม่มีเซิร์ฟเวอร์ Node.js รันอยู่เบื้องหลัง) จึงไม่สามารถเชื่อมต่อส่ง Gmail SMTP ได้โดยตรง กรุณาทดสอบส่งจริงผ่านหน้าต่าง Live Preview ของ AI Studio (หน้านี้) หรือรันใน VS Code ครับ'
+          : `เกิดข้อผิดพลาดในการเชื่อมต่อ: ${err.message || 'Network Error'}`,
       });
     } finally {
       setIsSending(false);
