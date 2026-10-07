@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T01:02:40Z",
+  "title": "Design System: MOTIX Motorsport Performance",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Racing Red",
+        "canonical": "#E63946",
+        "tonalRamp": ["#3B0D11", "#68131B", "#961D26", "#C1121F", "#E63946", "#FF6B6B", "#FFA8A8", "#FFE5E5"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Performance Orange",
+        "canonical": "#FF5722",
+        "tonalRamp": ["#3D1407", "#70230B", "#A83610", "#E64A19", "#FF5722", "#FF8A50", "#FFBE99", "#FFEADB"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Asphalt Carbon",
+        "canonical": "#07090E",
+        "tonalRamp": ["#030406", "#07090E", "#0E121A", "#141A26", "#1E2738", "#475569", "#94A3B8", "#F1F5F9"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Chakra Petch Display",
+        "purpose": "Hero headlines and key metrics."
+      },
+      "headline": {
+        "displayName": "Chakra Petch Headline",
+        "purpose": "Section titles and modal headers."
+      },
+      "body": {
+        "displayName": "Prompt / Plus Jakarta Sans",
+        "purpose": "Bilingual descriptions and product specifications."
+      }
+    },
+    "shadows": [
+      {
+        "name": "glow-red",
+        "value": "0 0 25px -4px rgba(230, 57, 70, 0.45)",
+        "purpose": "High-impact spotlight glow for active racing elements."
+      },
+      {
+        "name": "glow-orange",
+        "value": "0 0 25px -4px rgba(255, 87, 34, 0.45)",
+        "purpose": "Countdown and performance alert halo."
+      },
+      {
+        "name": "card-elevation",
+        "value": "0 10px 30px -10px rgba(0, 0, 0, 0.5)",
+        "purpose": "Elevation for glass chassis cards."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-motorsport",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Physics-based exponential deceleration for cards and drawers."
+      },
+      {
+        "name": "transition-fast",
+        "value": "150ms ease-out",
+        "purpose": "Quick response for buttons and toggles."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-velocity racing red primary action button with active scale feedback.",
+      "html": "<button class=\"ds-btn-primary\">SHOP NOW</button>",
+      "css": ".ds-btn-primary { background: linear-gradient(135deg, #E63946 0%, #C1121F 100%); color: #FFFFFF; padding: 10px 24px; font-family: 'Chakra Petch', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid rgba(230, 57, 70, 0.4); border-radius: 8px; cursor: pointer; box-shadow: 0 4px 14px rgba(230, 57, 70, 0.35); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5); } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Telemetry Chip",
+      "kind": "chip",
+      "refersTo": "racing-badge",
+      "description": "Racing telemetry badge for SKU specifications and product status flags.",
+      "html": "<span class=\"ds-telemetry-chip\">LIMITED TIME DEAL</span>",
+      "css": ".ds-telemetry-chip { display: inline-flex; align-items: center; padding: 4px 12px; background: rgba(230, 57, 70, 0.15); color: #FF6B6B; border: 1px solid rgba(230, 57, 70, 0.3); border-radius: 9999px; font-family: 'Chakra Petch', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Glass Chassis Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Frosted glass card with 1px alloy border and elevation for automotive components.",
+      "html": "<div class=\"ds-glass-card\"><h4 class=\"ds-card-title\">BREMBO RACING CALIPER</h4><p class=\"ds-card-desc\">Monobloc 4-Piston Performance Brake System</p></div>",
+      "css": ".ds-glass-card { background: rgba(17, 22, 34, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid #1E2738; border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); transition: border-color 0.2s, transform 0.2s; } .ds-glass-card:hover { border-color: rgba(230, 57, 70, 0.4); transform: translateY(-2px); } .ds-card-title { font-family: 'Chakra Petch', sans-serif; font-size: 16px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0; } .ds-card-desc { font-family: 'Prompt', sans-serif; font-size: 13px; color: #9CA3AF; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The High-Velocity Pit Studio",
+    "overview": "MOTIX merges the visceral mechanical urgency of an endurance racing pit stop with the clinical precision of a modern automotive design studio. The interface communicates speed, engineering rigor, and structural authority from the very first frame. Carbon dark finishes, crimson racing highlights, and tachometer-inspired amber accents evoke the cockpit telemetry of high-performance vehicles.",
+    "keyCharacteristics": [
+      "Mechanical Precision with technical angular display typography",
+      "Cockpit Atmosphere with deep slate-carbon canvas and luminous red highlights",
+      "Glass Telemetry with frosted backdrop blurs simulating instrumentation HUD panels",
+      "Zero Cosmetic Slop with solid high-contrast text and clean physics easing"
+    ],
+    "rules": [
+      {
+        "name": "The Rarity of Red Rule",
+        "body": "Primary Racing Red covers no more than 8% of any rendered viewport. Its purpose is conversion focus and urgent telemetry; when applied everywhere, it commands nothing.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Gradient-Text Rule",
+        "body": "Headings, hero display lines, and metrics use solid #FFFFFF, #F3F4F6, or #FF6B6B. Never use bg-clip-text text-transparent gradients.",
+        "section": "colors"
+      },
+      {
+        "name": "The Telemetry Uppercase Rule",
+        "body": "All system status indicators, badges, and SKUs are styled in uppercase Chakra Petch with 0.05em letter-spacing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Boundary Before Shadow Rule",
+        "body": "Surface elevation must first be established by background tone contrast and a 1px boundary border; shadows are reserved strictly for interactive hover states and active dialogs.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do maintain bilingual translation coverage for English and Thai via src/locales/ on all user-facing views.",
+      "Do enforce minimum 44x44px touch bounding boxes on all mobile interactive controls.",
+      "Do use Chakra Petch for technical labels, badges, headers, and numeric prices.",
+      "Do use physics-based exponential easing (cubic-bezier(0.16, 1, 0.3, 1)) for UI transitions.",
+      "Do provide motion-reduce:animate-none fallbacks for all continuous pulse/spin animations."
+    ],
+    "donts": [
+      "Don't use decorative gradient text (bg-clip-text text-transparent) on headings or prices.",
+      "Don't use cartoonish bounce easing (animate-bounce).",
+      "Don't apply decorative multi-axis grid overlays (racing-grid) on content surfaces.",
+      "Don't hardcode raw Thai or English strings without wiring them through useTranslation().",
+      "Don't render clickable actions as plain <span> or <div> without semantic <button> tags and keyboard focus handlers."
+    ]
+  }
+}

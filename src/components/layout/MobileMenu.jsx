@@ -67,14 +67,15 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-[#1F2636]">
-              <Link to="/" onClick={onClose}>
+              <Link to="/" onClick={onClose} aria-label="MOTIX Home">
                 <MotixBrandLogo size="sm" showTagline={true} />
               </Link>
               <button
+                type="button"
                 onClick={onClose}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 title="ปิดเมนู"
-                aria-label="Close Menu"
+                aria-label="ปิดเมนู"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -82,7 +83,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
 
             {/* Selected Vehicle Badge */}
             {selectedVehicle.model && (
-              <div className="mx-4 mt-3 p-2.5 rounded-xl bg-red-950/40 border border-red-900/50 flex items-center gap-2 text-xs">
+              <div className="mx-4 mt-3 p-3 rounded-xl bg-red-950/40 border border-red-900/50 flex items-center gap-2.5 text-xs">
                 <SlidersHorizontal className="w-4 h-4 text-[#E63946] shrink-0" />
                 <div className="truncate">
                   <span className="text-slate-400 block text-[10px]">รุ่นรถของคุณ:</span>
@@ -100,8 +101,9 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                 return (
                   <button
                     key={item.path}
+                    type="button"
                     onClick={() => handleLinkClick(item.path)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] transition-colors text-left cursor-pointer"
+                    className="w-full min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] transition-colors text-left cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
                       <Icon className="w-4 h-4 text-slate-400" />
@@ -118,8 +120,9 @@ export const MobileMenu = ({ isOpen, onClose }) => {
 
               <div className="pt-4 mt-4 border-t border-[#1F2636] space-y-1">
                 <button
+                  type="button"
                   onClick={() => handleLinkClick('/wishlist')}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] cursor-pointer"
+                  className="w-full min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <Heart className="w-4 h-4 text-slate-400" />
@@ -133,8 +136,9 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => handleLinkClick('/cart')}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] cursor-pointer"
+                  className="w-full min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-[#181E2C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <ShoppingCart className="w-4 h-4 text-[#E63946]" />
@@ -149,8 +153,8 @@ export const MobileMenu = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            {/* Footer Language & User */}
-            <div className="p-4 border-t border-[#1F2636] bg-[#0B0D12] space-y-3">
+            {/* Footer Language & User with Safe Area Padding */}
+            <div className="p-4 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))] border-t border-[#1F2636] bg-[#0B0D12] space-y-3">
               {/* Language Switch */}
               <div className="flex items-center justify-between text-xs text-slate-400">
                 <span className="flex items-center gap-1.5">
@@ -159,23 +163,25 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                 </span>
                 <div className="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700">
                   <button
+                    type="button"
                     onClick={() => {
                       i18n.changeLanguage('th');
                       localStorage.setItem('motix_lang', 'th');
                     }}
-                    className={`px-2 py-1 rounded text-[11px] font-bold cursor-pointer ${
-                      i18n.language === 'th' ? 'bg-[#E63946] text-white' : 'text-slate-400'
+                    className={`min-w-[36px] min-h-[36px] flex items-center justify-center px-2.5 py-1 rounded text-xs font-bold cursor-pointer ${
+                      i18n.language === 'th' ? 'bg-[#E63946] text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     TH
                   </button>
                   <button
+                    type="button"
                     onClick={() => {
                       i18n.changeLanguage('en');
                       localStorage.setItem('motix_lang', 'en');
                     }}
-                    className={`px-2 py-1 rounded text-[11px] font-bold cursor-pointer ${
-                      i18n.language === 'en' ? 'bg-[#E63946] text-white' : 'text-slate-400'
+                    className={`min-w-[36px] min-h-[36px] flex items-center justify-center px-2.5 py-1 rounded text-xs font-bold cursor-pointer ${
+                      i18n.language === 'en' ? 'bg-[#E63946] text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     EN
@@ -195,11 +201,12 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                     </span>
                   </div>
                   <button
+                    type="button"
                     onClick={() => {
                       logoutUser();
                       onClose();
                     }}
-                    className="w-full py-2 rounded-lg bg-red-950/30 text-red-400 text-xs font-bold border border-red-900/40 cursor-pointer"
+                    className="w-full min-h-[44px] py-2 rounded-xl bg-red-950/30 text-red-400 hover:text-red-300 text-xs font-bold border border-red-900/40 cursor-pointer"
                   >
                     ออกจากระบบ
                   </button>
@@ -207,15 +214,17 @@ export const MobileMenu = ({ isOpen, onClose }) => {
               ) : (
                 <div className="space-y-2">
                   <button
+                    type="button"
                     onClick={() => handleLinkClick('/register')}
-                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                    className="w-full min-h-[44px] py-2.5 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer active:scale-95 transition-all"
                   >
                     <User className="w-4 h-4" />
                     <span>สมัครสมาชิกใหม่ (รับ 100 แต้ม)</span>
                   </button>
                   <button
+                    type="button"
                     onClick={() => handleLinkClick('/login')}
-                    className="w-full py-2 rounded-xl bg-[#181E2C] hover:bg-[#222A3D] text-slate-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-2 border border-[#2B354A] cursor-pointer"
+                    className="w-full min-h-[44px] py-2 rounded-xl bg-[#181E2C] hover:bg-[#222A3D] text-slate-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-2 border border-[#2B354A] cursor-pointer active:scale-95 transition-all"
                   >
                     <span>เข้าสู่ระบบ</span>
                   </button>

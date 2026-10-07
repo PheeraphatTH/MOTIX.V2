@@ -38,11 +38,7 @@ export const FAQ = () => {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-xs font-bold text-[#FF6B6B] mb-2">
-            <HelpCircle className="w-4 h-4 text-[#E63946]" />
-            <span>FREQUENTLY ASKED QUESTIONS</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white font-heading">
+          <h1 className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
             คำถามที่พบบ่อย (FAQ)
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-2">

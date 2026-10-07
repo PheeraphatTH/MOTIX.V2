@@ -67,10 +67,7 @@ export const Categories = () => {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-2">
-            EXPLORE BY CATEGORY
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-black text-white">
+          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             หมวดหมู่อะไหล่รถยนต์และรถจักรยานยนต์
           </h1>
           <p className="text-sm text-slate-400 mt-2">
@@ -78,37 +75,40 @@ export const Categories = () => {
           </p>
 
           {/* Filter Pills */}
-          <div className="inline-flex items-center p-1 bg-[#131722] rounded-2xl border border-[#242C3D] mt-6">
+          <div className="inline-flex flex-wrap items-center justify-center p-1.5 bg-[#131722] rounded-2xl border border-[#242C3D] mt-6 gap-1">
             <button
+              type="button"
               onClick={() => handleFilterChange('all')}
-              className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 filterType === 'all'
                   ? 'bg-[#E63946] text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
               หมวดหมู่ทั้งหมด ({categories.length})
             </button>
             <button
+              type="button"
               onClick={() => handleFilterChange('car')}
-              className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`min-h-[44px] flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 filterType === 'car'
                   ? 'bg-[#E63946] text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              <Car className="w-3.5 h-3.5" />
+              <Car className="w-4 h-4" />
               <span>อะไหล่รถยนต์ ({carCategories.length})</span>
             </button>
             <button
+              type="button"
               onClick={() => handleFilterChange('motorcycle')}
-              className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`min-h-[44px] flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 filterType === 'motorcycle'
                   ? 'bg-[#FF5722] text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              <Bike className="w-3.5 h-3.5" />
+              <Bike className="w-4 h-4" />
               <span>อะไหล่มอเตอร์ไซค์ ({motoCategories.length})</span>
             </button>
           </div>

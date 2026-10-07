@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles,
@@ -10,6 +10,10 @@ import {
   AlertTriangle,
   ArrowRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  LayoutGrid,
+  Layers,
   PackageCheck,
 } from 'lucide-react';
 import { vehicleData } from '../../data/vehicles';
@@ -69,6 +73,20 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
   const [goal, setGoal] = useState('all');
   const [category, setCategory] = useState('all');
   const [budget, setBudget] = useState('all');
+  const [resultsViewMode, setResultsViewMode] = useState('slider'); // 'slider' | 'grid'
+  const sliderRef = useRef(null);
+
+  const handleScrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -340, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+    }
+  };
 
   // Available brands & models based on vehicle type
   const availableBrands = vehicleData[vehicleType]?.brands || [];
@@ -400,28 +418,104 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
 
       {/* 2. CLEAN RESULTS DISPLAY SECTION */}
       <div id="form-recommendation-results" className="space-y-6 scroll-mt-24">
-        <div className="flex items-center justify-between">
-          <h3 className="text-base sm:text-lg font-bold text-white">
-            รายการอะไหล่แนะนำ ({recommendedResults.length} รายการ)
-          </h3>
-          {model && (
-            <span className="text-xs text-emerald-400 flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>ตรงรุ่น {model}</span>
-            </span>
-          )}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <h3 className="text-base sm:text-lg font-bold text-white">
+              รายการอะไหล่แนะนำ ({recommendedResults.length} รายการ)
+            </h3>
+            {model && (
+              <span className="text-xs text-emerald-400 flex items-center gap-1.5 font-medium px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>ตรงรุ่น {model}</span>
+              </span>
+            )}
+          </div>
+
+          {/* View Mode Toggle & Slider Controls */}
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            {/* View Mode Switcher */}
+            <div className="flex items-center p-1 rounded-xl bg-[#141A28] border border-[#232D42]">
+              <button
+                type="button"
+                onClick={() => setResultsViewMode('slider')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  resultsViewMode === 'slider'
+                    ? 'bg-[#E63946] text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+                title="โหมดสไลด์โชว์"
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>สไลด์โชว์</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setResultsViewMode('grid')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  resultsViewMode === 'grid'
+                    ? 'bg-[#E63946] text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+                title="โหมดตาราง"
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>ตาราง</span>
+              </button>
+            </div>
+
+            {/* Slider Navigation Arrows */}
+            {resultsViewMode === 'slider' && recommendedResults.length > 0 && (
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={handleScrollLeft}
+                  className="p-2 rounded-xl bg-[#141A28] hover:bg-[#1E2638] text-slate-300 hover:text-white border border-[#232D42] transition-colors cursor-pointer"
+                  title="เลื่อนไปทางซ้าย"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleScrollRight}
+                  className="p-2 rounded-xl bg-[#141A28] hover:bg-[#1E2638] text-slate-300 hover:text-white border border-[#232D42] transition-colors cursor-pointer"
+                  title="เลื่อนไปทางขวา"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {recommendedResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {recommendedResults.map((product) => (
-              <SmartAdvisorCard
-                key={product.id}
-                product={product}
-                onQuickView={onQuickView}
-              />
-            ))}
-          </div>
+          resultsViewMode === 'slider' ? (
+            <div className="relative">
+              <div
+                ref={sliderRef}
+                className="flex items-stretch gap-5 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x snap-mandatory"
+                style={{ scrollbarWidth: 'none' }}
+              >
+                {recommendedResults.map((product) => (
+                  <div key={product.id} className="w-[280px] sm:w-[310px] shrink-0 snap-start">
+                    <SmartAdvisorCard
+                      product={product}
+                      onQuickView={onQuickView}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {recommendedResults.map((product) => (
+                <SmartAdvisorCard
+                  key={product.id}
+                  product={product}
+                  onQuickView={onQuickView}
+                />
+              ))}
+            </div>
+          )
         ) : (
           <div className="p-8 text-center rounded-2xl bg-[#11151F] border border-[#202738] max-w-md mx-auto space-y-3">
             <AlertTriangle className="w-7 h-7 text-amber-400 mx-auto" />

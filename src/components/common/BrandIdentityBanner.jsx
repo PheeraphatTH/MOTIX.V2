@@ -214,7 +214,7 @@ export const BrandIdentityBanner = ({ className = '' }) => {
       <div className="mt-4 mb-6 space-y-1.5 max-w-2xl">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase tracking-wider font-heading">
           KEEP YOUR RIDE{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] to-[#FF5722] italic">
+          <span className="text-[#E63946] italic">
             MOVING.
           </span>
         </h2>

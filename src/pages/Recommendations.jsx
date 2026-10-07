@@ -145,10 +145,6 @@ export const Recommendations = () => {
 
         {/* Hero Header */}
         <div className="mb-10 text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-red-500/20 via-amber-500/20 to-red-500/20 border border-red-500/30 text-amber-300 text-xs font-black uppercase tracking-wider shadow-lg">
-            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>MOTIX SMART ADVISOR & RECOMMENDATION</span>
-          </div>
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             ระบบผู้ช่วยแนะนำอะไหล่อัจฉริยะ
           </h1>
@@ -164,7 +160,7 @@ export const Recommendations = () => {
                 setMode('form');
                 setSearchParams({ mode: 'form' });
               }}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`min-h-[44px] flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 mode === 'form'
                   ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg shadow-red-950/50 ring-1 ring-red-400'
                   : 'bg-[#151A26] text-slate-400 hover:text-white border border-[#252E42]'
@@ -180,7 +176,7 @@ export const Recommendations = () => {
                 setMode('symptom');
                 setSearchParams({ mode: 'symptom', symptom: selectedSymptomId });
               }}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`min-h-[44px] flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 mode === 'symptom'
                   ? 'bg-[#E63946] text-white shadow-lg shadow-red-950/50'
                   : 'bg-[#151A26] text-slate-400 hover:text-white border border-[#252E42]'
@@ -196,7 +192,7 @@ export const Recommendations = () => {
                 setMode('quiz');
                 setSearchParams({ mode: 'quiz' });
               }}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`min-h-[44px] flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 mode === 'quiz'
                   ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-orange-950/50'
                   : 'bg-[#151A26] text-slate-400 hover:text-white border border-[#252E42]'

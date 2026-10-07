@@ -22,7 +22,7 @@ export const Testimonials = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 p-6 rounded-3xl bg-[#141824] border border-[#262F42] shadow-xl">
           {marketingStats.map((stat, i) => (
             <div key={i} className="text-center p-3">
-              <div className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#FF8A8A]">
+              <div className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-white">
                 {stat.value}
               </div>
               <div className="text-xs text-slate-400 font-semibold mt-1">

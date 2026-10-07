@@ -42,10 +42,7 @@ export const Contact = () => {
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-2">
-            GET IN TOUCH
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-black text-white">
+          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             ติดต่อเรา & ปรึกษาทีมช่างผู้เชี่ยวชาญ
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-2">

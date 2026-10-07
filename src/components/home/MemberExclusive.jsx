@@ -78,7 +78,7 @@ export const MemberExclusive = () => {
 
               {/* Title */}
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                สิทธิพิเศษเฉพาะสมาชิก <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B6B] via-[#E63946] to-[#FF5722]">MOTIX</span> เท่านั้น
+                สิทธิพิเศษเฉพาะสมาชิก <span className="text-[#FF6B6B]">MOTIX</span> เท่านั้น
               </h2>
 
               <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">

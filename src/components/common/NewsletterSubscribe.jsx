@@ -87,7 +87,7 @@ export const NewsletterSubscribe = ({ variant = 'default' }) => {
         {/* Title & Description */}
         <div className="space-y-2">
           <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-            รับข่าวสาร อะไหล่เข้าใหม่ และ <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B6B] via-[#E63946] to-[#FF5722]">โค้ดลดทันที 10%</span>
+            รับข่าวสาร อะไหล่เข้าใหม่ และ <span className="text-[#FF6B6B] font-extrabold">โค้ดลดทันที 10%</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
             สมัครรับจดหมายข่าวทางอีเมลเพื่อไม่พลาด Flash Sale ดีลอะไหล่รถยนต์-มอเตอร์ไซค์ตรงรุ่น 

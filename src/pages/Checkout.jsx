@@ -1060,12 +1060,12 @@ export const Checkout = () => {
         
         {/* Header */}
         <div className="mb-6">
-          <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-1">
-            CHECKOUT STEP
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
             ยืนยันคำสั่งซื้อและการจัดส่ง
           </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            กรอกข้อมูลที่อยู่จัดส่งและเลือกวิธีการชำระเงินเพื่อดำเนินการต่อ
+          </p>
         </div>
 
         {/* Member Status & Rewards Banner */}

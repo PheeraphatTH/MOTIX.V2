@@ -91,7 +91,7 @@ export const ProductDetail = () => {
     : null;
 
   return (
-    <div className="min-h-screen bg-[#0B0D12] py-6 sm:py-10 text-slate-300">
+    <div className="min-h-screen bg-[#0B0D12] pt-6 pb-24 lg:py-10 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumbs */}
@@ -112,7 +112,7 @@ export const ProductDetail = () => {
           
           {/* Left Column: Gallery */}
           <div className="lg:col-span-6">
-            <ProductGallery images={product.images || [product.image]} productName={product.name} />
+            <ProductGallery product={product} images={product.images || [product.image]} productName={product.name} />
           </div>
 
           {/* Right Column: Product Core Info & Buying Actions */}
@@ -134,8 +134,9 @@ export const ProductDetail = () => {
                   <button
                     type="button"
                     onClick={handleShare}
-                    className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-xs flex items-center gap-1"
+                    className="min-h-[44px] px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-xs flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     title="แชร์สินค้านี้"
+                    aria-label="แชร์สินค้านี้"
                   >
                     <Share2 className="w-4 h-4" />
                     <span>{copiedLink ? 'คัดลอกลิงก์แล้ว' : 'แชร์'}</span>
@@ -144,12 +145,13 @@ export const ProductDetail = () => {
                   <button
                     type="button"
                     onClick={() => toggleWishlist(product)}
-                    className={`p-2 rounded-xl border transition-all ${
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                       isFavorite
                         ? 'bg-red-500 text-white border-red-500'
                         : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 border-slate-700'
                     }`}
                     title="รายการโปรด"
+                    aria-label="บันทึกในรายการโปรด"
                   >
                     <Heart className={`w-4 h-4 ${isFavorite ? 'fill-white' : ''}`} />
                   </button>
@@ -251,29 +253,31 @@ export const ProductDetail = () => {
             {/* Buying Controls */}
             <div className="space-y-4 pt-4 border-t border-[#1E2536]">
               {/* Quantity Selector */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-4">
                 <span className="text-xs font-bold text-slate-300">จำนวน:</span>
-                <div className="flex items-center rounded-xl bg-[#161B27] border border-[#2B354A]">
+                <div className="flex items-center rounded-xl bg-[#161B27] border border-[#2B354A] overflow-hidden">
                   <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-3 py-2 text-slate-300 hover:text-white font-bold"
+                    aria-label="ลดจำนวน"
+                    className="w-11 h-11 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-800 font-bold text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     -
                   </button>
-                  <span className="px-4 py-2 text-sm font-mono font-bold text-white">
+                  <span className="w-12 text-center text-sm font-mono font-bold text-white select-none">
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity(quantity + 1)}
-                    className="px-3 py-2 text-slate-300 hover:text-white font-bold"
+                    aria-label="เพิ่มจำนวน"
+                    className="w-11 h-11 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-800 font-bold text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     +
                   </button>
                 </div>
                 <span className="text-xs text-slate-400">
-                  ยอดรวม: <strong className="text-white font-mono">฿{formatPrice(product.price * quantity)}</strong>
+                  ยอดรวม: <strong className="text-white font-mono text-sm">฿{formatPrice(product.price * quantity)}</strong>
                 </span>
               </div>
 
@@ -328,17 +332,20 @@ export const ProductDetail = () => {
         <div className="mt-12 rounded-3xl bg-[#121622] border border-[#222A3B] p-6 sm:p-8 shadow-xl">
           
           {/* Tab Navigation Buttons */}
-          <div className="flex items-center gap-2 border-b border-[#1E2536] pb-4 mb-6 overflow-x-auto">
+          <div role="tablist" aria-label="ข้อมูลสินค้าเพิ่มเติม" className="flex items-center gap-2 border-b border-[#1E2536] pb-4 mb-6 overflow-x-auto">
             {[
               { id: 'description', label: 'รายละเอียดสินค้า' },
               { id: 'specs', label: 'สเปกและข้อมูลทางเทคนิค' },
-              { id: 'compatibility', label: 'รุ่นรถยนต์/มอเตอร์ไซค์ที่รองรับ' },
-              { id: 'reviews', label: `รีวิวจากผู้ใช้ (${product.reviews?.length || 0})` },
+              { id: 'compatibility', label: 'รุ่นรถที่รองรับ' },
+              { id: 'reviews', label: `รีวิว (${product.reviews?.length || 0})` },
             ].map((tab) => (
               <button
                 key={tab.id}
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
+                className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                   activeTab === tab.id
                     ? 'bg-[#E63946] text-white shadow-md'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
@@ -359,12 +366,12 @@ export const ProductDetail = () => {
                   {product.description}
                 </p>
                 <div className="pt-4 border-t border-[#1E2536]">
-                  <h4 className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider mb-2">
-                    คุณสมบัติเด่น (Key Features):
+                  <h4 className="text-sm font-bold text-white mb-2.5">
+                    คุณสมบัติเด่น (Key Features)
                   </h4>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300">
                     {product.features?.map((f, i) => (
-                      <li key={i} className="flex items-center gap-2 p-2 rounded-lg bg-[#0E1119] border border-[#1F2636]">
+                      <li key={i} className="flex items-center gap-2 p-2.5 rounded-lg bg-[#0E1119] border border-[#1F2636]">
                         <CheckCircle2 className="w-4 h-4 text-[#E63946] shrink-0" />
                         <span>{f}</span>
                       </li>
@@ -471,6 +478,40 @@ export const ProductDetail = () => {
         )}
 
       </div>
+
+      {/* Sticky Mobile Buy Bar for friction-free conversion with safe area support */}
+      <aside aria-label="แถบสั่งซื้อด่วนบนมือถือ" className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#121622]/95 backdrop-blur-md border-t border-[#222A3B] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] flex items-center justify-between gap-3 shadow-2xl">
+        <div className="min-w-0 flex-1">
+          <span className="text-[11px] text-slate-400 block truncate">{product.name}</span>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-base font-black text-white font-mono">฿{formatPrice(product.price * quantity)}</span>
+            {quantity > 1 && (
+              <span className="text-[10px] text-slate-400 font-mono">({quantity} ชิ้น)</span>
+            )}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            disabled={product.stock <= 0}
+            aria-label="เพิ่มลงตะกร้า"
+            className="min-h-[44px] px-3.5 rounded-xl bg-[#1C2230] border border-[#2B354A] text-slate-200 hover:text-white font-bold text-xs flex items-center gap-1.5 hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 transition-all disabled:opacity-50"
+          >
+            <ShoppingCart className="w-4 h-4 text-[#E63946]" />
+            <span className="hidden xs:inline">เพิ่มลงตะกร้า</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleBuyNow}
+            disabled={product.stock <= 0}
+            className="min-h-[44px] px-4 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white font-bold text-xs flex items-center gap-1.5 shadow-md hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 transition-all disabled:opacity-50"
+          >
+            <Zap className="w-4 h-4" />
+            <span>ซื้อทันที</span>
+          </button>
+        </div>
+      </aside>
     </div>
   );
 };

@@ -31,18 +31,19 @@ export const Wishlist = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1E2536]">
           <div>
-            <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-1">
-              SAVED ITEMS
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               รายการอะไหล่ที่คุณบันทึกไว้ ({wishlist.length} รายการ)
             </h1>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              สินค้าที่คุณสนใจเพื่อกลับมาดูหรือสั่งซื้อในภายหลัง
+            </p>
           </div>
 
           <button
             type="button"
             onClick={clearWishlist}
-            className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors"
+            aria-label="ล้างรายการโปรดทั้งหมด"
+            className="min-h-[44px] px-2 text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 rounded-lg cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
             <span>ล้างรายการโปรดทั้งหมด</span>

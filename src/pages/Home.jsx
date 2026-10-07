@@ -1,10 +1,11 @@
 import React from 'react';
 import { Hero } from '../components/home/Hero';
-import { SmartRecommendationSection } from '../components/home/SmartRecommendationSection';
-import { MemberExclusive } from '../components/home/MemberExclusive';
-import { Categories } from '../components/home/Categories';
-import { FeaturedProducts } from '../components/home/FeaturedProducts';
+import { BrandMarquee } from '../components/home/BrandMarquee';
 import { FlashSale } from '../components/home/FlashSale';
+import { Categories } from '../components/home/Categories';
+import { SmartRecommendationSection } from '../components/home/SmartRecommendationSection';
+import { FeaturedProducts } from '../components/home/FeaturedProducts';
+import { MemberExclusive } from '../components/home/MemberExclusive';
 import { MotixGarage } from '../components/home/MotixGarage';
 import { PromotionBanner } from '../components/home/PromotionBanner';
 import { WhyMotix } from '../components/home/WhyMotix';
@@ -13,38 +14,41 @@ import { MarketingShowcase } from '../components/home/MarketingShowcase';
 
 export const Home = () => {
   return (
-    <div className="min-h-screen space-y-14 sm:space-y-20 pb-16">
-      {/* 1. Hero Section (Keep Your Ride Moving + Motorsport Visual) */}
+    <div className="min-h-screen space-y-12 sm:space-y-16 pb-16">
+      {/* 1. Hero Section (In-Cockpit Vehicle Finder + Cinematic Visual) */}
       <Hero />
 
-      {/* 2. Smart Recommendation Section (ระบบแนะนำอะไหล่อัจฉริยะ & แบบฟอร์มคัดกรองตรงรุ่น) */}
-      <SmartRecommendationSection />
+      {/* 2. Official OEM & Racing Brand Marquee Ticker */}
+      <BrandMarquee />
 
-      {/* 3. Member Exclusive (สิทธิพิเศษสมาชิก MOTIX ตามเรฟรูปภาพ) */}
-      <MemberExclusive />
-
-      {/* 4. Flash Sale Deal of the Day */}
+      {/* 3. Flash Sale Deal of the Day (Telemetry Timer + Urgency) */}
       <FlashSale />
 
-      {/* 5. Product Categories */}
+      {/* 4. Product Categories (Motorsport Sub-systems) */}
       <Categories />
+
+      {/* 5. Smart Recommendation Section (AI Diagnostic Center & Vehicle Match) */}
+      <SmartRecommendationSection />
 
       {/* 6. Featured Products & Best Sellers */}
       <FeaturedProducts />
 
-      {/* 7. MOTIX Garage (ความรู้ดี ๆ สำหรับคนรักรถ ตามเรฟรูปภาพ) */}
+      {/* 7. Member Exclusive (MOTIX Club Racing Lounge) */}
+      <MemberExclusive />
+
+      {/* 8. MOTIX Garage (Automotive Knowledge & Maintenance Guides) */}
       <MotixGarage />
 
-      {/* 8. Promotion & Bundles Banner */}
+      {/* 9. Promotion & Bundles Banner */}
       <PromotionBanner />
 
-      {/* 9. Why Choose MOTIX (4 เสาหลักการันตีอะไหล่แท้และการบริการ) */}
+      {/* 10. Why Choose MOTIX (4 Value Pillars) */}
       <WhyMotix />
 
-      {/* 10. Customer Reviews & Social Proof */}
+      {/* 11. Customer Reviews & Social Proof */}
       <Testimonials />
 
-      {/* 11. Brand Core & Digital Marketing Journey */}
+      {/* 12. Brand Core & Digital Marketing Journey */}
       <MarketingShowcase />
     </div>
   );

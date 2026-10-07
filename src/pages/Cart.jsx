@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ShoppingCart,
   Trash2,
@@ -21,6 +22,7 @@ import { EmptyState } from '../components/common/EmptyState';
 
 export const Cart = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     cart,
     removeFromCart,
@@ -62,9 +64,9 @@ export const Cart = () => {
       <div className="min-h-screen bg-[#0B0D12] py-16">
         <div className="max-w-4xl mx-auto px-4">
           <EmptyState
-            title="ตะกร้าสินค้าของคุณยังว่างอยู่"
-            description="เลือกรุ่นรถของคุณ หรือค้นหาอะไหล่แท้คุณภาพสูงเพื่อเริ่มต้นการสั่งซื้อ"
-            actionLabel="เริ่มเลือกซื้ออะไหล่"
+            title={t('cart.empty')}
+            description={t('cart.emptyDesc')}
+            actionLabel={t('cart.startShopping')}
             onAction={() => navigate('/products')}
           />
         </div>
@@ -79,21 +81,22 @@ export const Cart = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1E2536]">
           <div>
-            <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-1">
-              SHOPPING CART
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
-              ตะกร้าสินค้าของคุณ ({cart.length} รายการ)
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              {t('cart.title')} ({cart.length} {t('cart.itemsCount')})
             </h1>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              {t('cart.subtitle')}
+            </p>
           </div>
 
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors cursor-pointer"
+            aria-label={t('cart.clearCart')}
+            className="min-h-[44px] px-2 text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 rounded-lg"
           >
             <Trash2 className="w-4 h-4" />
-            <span>ล้างตะกร้าทั้งหมด</span>
+            <span>{t('cart.clearCart')}</span>
           </button>
         </div>
 
@@ -150,11 +153,11 @@ export const Cart = () => {
                     </Link>
 
                     <p className="text-xs text-slate-400 line-clamp-1">
-                      รองรับ: {fitmentText}
+                      {fitmentText}
                     </p>
 
                     <div className="text-sm font-mono text-slate-300 sm:hidden pt-1">
-                      ฿{formatPrice(safePrice)} ต่อชิ้น
+                      ฿{formatPrice(safePrice)} {t('cart.perUnit')}
                     </div>
                   </div>
 
@@ -164,19 +167,21 @@ export const Cart = () => {
                       <button
                         type="button"
                         onClick={() => updateQuantity(itemId, quantity - 1)}
-                        className="px-2.5 py-1 text-slate-300 hover:text-white font-bold cursor-pointer transition-colors"
-                        title="ลดจำนวน"
+                        className="flex items-center justify-center min-w-[44px] min-h-[44px] text-slate-300 hover:text-white font-bold cursor-pointer transition-colors active:scale-95"
+                        aria-label={t('cart.decrease')}
+                        title={t('cart.decrease')}
                       >
                         -
                       </button>
-                      <span className="px-3 py-1 text-xs font-mono font-bold text-white min-w-[28px] text-center">
+                      <span className="px-3 py-1 text-xs font-mono font-bold text-white min-w-[32px] text-center" aria-live="polite">
                         {quantity}
                       </span>
                       <button
                         type="button"
                         onClick={() => updateQuantity(itemId, quantity + 1)}
-                        className="px-2.5 py-1 text-slate-300 hover:text-white font-bold cursor-pointer transition-colors"
-                        title="เพิ่มจำนวน"
+                        className="flex items-center justify-center min-w-[44px] min-h-[44px] text-slate-300 hover:text-white font-bold cursor-pointer transition-colors active:scale-95"
+                        aria-label={t('cart.increase')}
+                        title={t('cart.increase')}
                       >
                         +
                       </button>
@@ -187,15 +192,16 @@ export const Cart = () => {
                         ฿{formatPrice(safePrice * quantity)}
                       </span>
                       <span className="hidden sm:block text-[10px] text-slate-400 font-mono">
-                        (฿{formatPrice(safePrice)} / ชิ้น)
+                        (฿{formatPrice(safePrice)} / {t('cart.perUnit')})
                       </span>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => removeFromCart(itemId)}
-                      className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 transition-colors cursor-pointer"
-                      title="ลบรายการนี้"
+                      className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 rounded-xl text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+                      aria-label={t('cart.deleteItem')}
+                      title={t('cart.deleteItem')}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -208,15 +214,15 @@ export const Cart = () => {
             <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#121622]/60 border border-[#1E2536] text-xs text-slate-400 text-center">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-[#E63946]" />
-                <span>อะไหล่แท้ 100%</span>
+                <span>{t('cart.guarantee100')}</span>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5">
                 <Truck className="w-4 h-4 text-[#FF5722]" />
-                <span>ส่งด่วน 24-48 ชม.</span>
+                <span>{t('cart.deliveryFast')}</span>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5">
                 <RotateCcw className="w-4 h-4 text-emerald-400" />
-                <span>เปลี่ยนคืนใน 7 วัน</span>
+                <span>{t('cart.return7Days')}</span>
               </div>
             </div>
           </div>
@@ -228,7 +234,7 @@ export const Cart = () => {
             <div className="rounded-2xl bg-[#121622] border border-[#222A3B] p-5 shadow-lg space-y-3">
               <div className="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-wider">
                 <Tag className="w-4 h-4 text-[#E63946]" />
-                <span>โค้ดส่วนลด (Coupon Code)</span>
+                <span>{t('cart.couponCode')}</span>
               </div>
 
               {appliedCoupon ? (
@@ -242,20 +248,21 @@ export const Cart = () => {
                     onClick={removeCoupon}
                     className="text-xs text-red-400 hover:underline font-bold"
                   >
-                    ยกเลิก
+                    {t('cart.cancelCoupon')}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleApplyCoupon} className="flex gap-2">
                   <input
                     type="text"
-                    placeholder="กรอกโค้ด เช่น MOTIX100"
+                    placeholder={t('cart.promoPlaceholder')}
                     value={couponInput}
                     onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                     className="flex-1 bg-[#0E1119] border border-[#2A344A] rounded-xl px-3 py-2 text-xs text-white uppercase font-mono focus:outline-none focus:border-[#E63946]"
+                    aria-label={t('cart.couponCode')}
                   />
                   <Button type="submit" variant="primary" size="sm">
-                    ใช้โค้ด
+                    {t('cart.apply')}
                   </Button>
                 </form>
               )}
@@ -264,38 +271,59 @@ export const Cart = () => {
                 <p className="text-[11px] text-red-400">{couponError}</p>
               )}
 
-              <div className="pt-2 text-[11px] text-slate-400 flex flex-wrap gap-1.5">
-                <span>โค้ดแนะนำ:</span>
-                <span className="font-mono text-white bg-slate-800 px-1.5 py-0.5 rounded cursor-pointer" onClick={() => applyCoupon('MOTIX100')}>MOTIX100</span>
-                <span className="font-mono text-white bg-slate-800 px-1.5 py-0.5 rounded cursor-pointer" onClick={() => applyCoupon('FREESHIP')}>FREESHIP</span>
-                <span className="font-mono text-white bg-slate-800 px-1.5 py-0.5 rounded cursor-pointer" onClick={() => applyCoupon('RIDE150')}>RIDE150</span>
+              <div className="pt-2 text-[11px] text-slate-400 flex flex-wrap items-center gap-1.5">
+                <span>{t('cart.recommendedCodes')}</span>
+                <button
+                  type="button"
+                  onClick={() => applyCoupon('MOTIX100')}
+                  className="font-mono text-white bg-slate-800 hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-red-500 px-2 py-1 rounded text-xs cursor-pointer transition-colors"
+                  aria-label="Use coupon MOTIX100"
+                >
+                  MOTIX100
+                </button>
+                <button
+                  type="button"
+                  onClick={() => applyCoupon('FREESHIP')}
+                  className="font-mono text-white bg-slate-800 hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-red-500 px-2 py-1 rounded text-xs cursor-pointer transition-colors"
+                  aria-label="Use coupon FREESHIP"
+                >
+                  FREESHIP
+                </button>
+                <button
+                  type="button"
+                  onClick={() => applyCoupon('RIDE150')}
+                  className="font-mono text-white bg-slate-800 hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-red-500 px-2 py-1 rounded text-xs cursor-pointer transition-colors"
+                  aria-label="Use coupon RIDE150"
+                >
+                  RIDE150
+                </button>
               </div>
             </div>
 
             {/* Summary Card */}
             <div className="rounded-2xl bg-[#121622] border border-[#222A3B] p-6 shadow-xl space-y-4">
               <h3 className="text-base font-bold text-white pb-3 border-b border-[#1E2536]">
-                สรุปคำสั่งซื้อ (Order Summary)
+                {t('cart.orderSummary')}
               </h3>
 
               <div className="space-y-2.5 text-xs">
                 <div className="flex justify-between text-slate-300">
-                  <span>ยอดรวมสินค้า (Subtotal):</span>
+                  <span>{t('cart.itemsTotal')}:</span>
                   <span className="font-mono font-bold text-white">฿{formatPrice(cartSubtotal)}</span>
                 </div>
 
                 {cartDiscount > 0 && (
                   <div className="flex justify-between text-emerald-400">
-                    <span>ส่วนลดคูปอง ({appliedCoupon?.code}):</span>
+                    <span>{t('cart.discount')} ({appliedCoupon?.code}):</span>
                     <span className="font-mono font-bold">-฿{formatPrice(cartDiscount)}</span>
                   </div>
                 )}
 
                 <div className="flex justify-between text-slate-300">
-                  <span>ค่าจัดส่งพัสดุด่วน:</span>
+                  <span>{t('cart.shipping')}:</span>
                   <span className="font-mono font-bold text-white">
                     {cartShipping === 0 ? (
-                      <span className="text-emerald-400">ฟรี (โปรโมชั่น)</span>
+                      <span className="text-emerald-400">{t('cart.freeShipping')}</span>
                     ) : (
                       `฿${cartShipping}`
                     )}
@@ -303,17 +331,15 @@ export const Cart = () => {
                 </div>
 
                 <div className="flex justify-between text-slate-400 text-[11px]">
-                  <span>ภาษีมูลค่าเพิ่ม VAT 7%:</span>
-                  <span>รวมในราคาแล้ว</span>
+                  <span>{t('cart.vatIncluded')}</span>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-[#1E2536] flex items-baseline justify-between">
                 <div>
-                  <span className="text-sm font-bold text-white block">ยอดชำระสุทธิ</span>
-                  <span className="text-[10px] text-slate-400">Net Total Amount</span>
+                  <span className="text-sm font-bold text-white block">{t('cart.netTotal')}</span>
                 </div>
-                <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#FF8A8A] font-mono">
+                <span className="text-2xl font-black text-white font-mono">
                   ฿{formatPrice(cartTotal)}
                 </span>
               </div>
@@ -329,17 +355,17 @@ export const Cart = () => {
                     </div>
                   </div>
                   <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                    +{Math.floor(cartTotal / 50)} แต้ม
+                    +{Math.floor(cartTotal / 50)} {t('cart.points')}
                   </span>
                 </div>
               ) : (
                 <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1.5 text-xs text-amber-200">
                   <div className="flex items-center gap-1.5 font-bold text-amber-300">
                     <Lock className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>ต้องเข้าสู่ระบบก่อนสั่งซื้อ</span>
+                    <span>{t('cart.loginRequiredTitle')}</span>
                   </div>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    ระบบกำหนดให้เข้าสู่ระบบหรือสมัครสมาชิกก่อน เพื่อผูกประวัติคำสั่งซื้อและรับประกันอะไหล่แท้
+                    {t('cart.loginRequiredDesc')}
                   </p>
                 </div>
               )}
@@ -359,14 +385,14 @@ export const Cart = () => {
                 }}
                 className="w-full shadow-lg shadow-red-950/60 font-bold"
               >
-                {user ? 'ดำเนินการสั่งซื้อ (Checkout)' : 'เข้าสู่ระบบเพื่อสั่งซื้อสินค้า (Login to Order)'}
+                {user ? t('cart.checkout') : t('cart.loginToOrder')}
               </Button>
 
               <Link
                 to="/products"
                 className="block text-center text-xs text-slate-400 hover:text-white transition-colors"
               >
-                ← เลือกซื้อสินค้าเพิ่มเติม
+                ← {t('cart.continueShopping')}
               </Link>
             </div>
 

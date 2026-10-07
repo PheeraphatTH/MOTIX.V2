@@ -74,7 +74,7 @@ export const MarketingShowcase = () => {
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight font-heading">
               รถพร้อม • คนพร้อม <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] via-[#FF5722] to-[#FF8A50]">
+              <span className="text-[#FF5722]">
                 การเดินทางก็ไปต่อได้
               </span>
             </h2>

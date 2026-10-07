@@ -152,14 +152,11 @@ export const Products = () => {
     <div className="min-h-screen bg-[#0B0D12] py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Header */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Top Header & Control Bar */}
+        <div className="mb-8 space-y-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-[#1E2536]">
             <div>
-              <span className="text-xs font-bold text-[#FF6B6B] uppercase tracking-wider block mb-1">
-                MOTIX PRODUCT CATALOG
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-white">
+              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                 {searchQuery ? `ผลการค้นหา "${searchQuery}"` : 'รายการอะไหล่ทั้งหมด'}
               </h1>
               <p className="text-xs sm:text-sm text-slate-400 mt-1">
@@ -167,24 +164,30 @@ export const Products = () => {
               </p>
             </div>
 
-            {/* Mobile Filter & Sort Bar */}
-            <div className="flex items-center gap-2.5">
+            {/* Controls: Mobile Filter Trigger & Sort Dropdown */}
+            <div className="flex items-center gap-3 w-full md:w-auto">
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-                className="lg:hidden flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#141822] border border-[#2B3448] text-xs font-bold text-slate-200"
+                aria-label="เปิดตัวกรองสินค้า"
+                className="lg:hidden flex-1 sm:flex-none min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#141822] border border-[#2B3448] text-xs font-bold text-slate-200 hover:border-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] transition-colors"
               >
                 <Filter className="w-4 h-4 text-[#E63946]" />
                 <span>ตัวกรองสินค้า</span>
+                {(filters.categories.length > 0 || filters.brands.length > 0 || filters.promoOnly) && (
+                  <span className="w-2 h-2 rounded-full bg-[#E63946]"></span>
+                )}
               </button>
 
               {/* Sort dropdown */}
-              <div className="flex items-center gap-2 bg-[#141822] border border-[#2B3448] rounded-xl px-3 py-2">
-                <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+              <div className="flex-1 md:flex-initial flex items-center gap-2 bg-[#141822] border border-[#2B3448] rounded-xl px-3 min-h-[44px] focus-within:border-slate-500 focus-within:ring-2 focus-within:ring-[#E63946]/50">
+                <ArrowUpDown className="w-4 h-4 text-slate-400 shrink-0" />
+                <label htmlFor="products-sort-select" className="sr-only">เรียงลำดับสินค้า</label>
                 <select
+                  id="products-sort-select"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-transparent text-xs text-slate-200 font-semibold focus:outline-none cursor-pointer"
+                  className="w-full bg-transparent text-xs text-slate-200 font-semibold focus:outline-none cursor-pointer py-2.5"
                 >
                   <option value="recommended" className="bg-[#141822]">แนะนำยอดนิยม</option>
                   <option value="price-asc" className="bg-[#141822]">ราคา: ต่ำ → สูง</option>
@@ -198,8 +201,8 @@ export const Products = () => {
 
           {/* Active Vehicle Notification if active */}
           {selectedVehicle.model && (
-            <div className="mt-4 p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/60 flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2 text-emerald-300">
+            <div className="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/60 flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2.5 text-emerald-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>
                   กำลังกรองเฉพาะอะไหล่ที่ตรงรุ่นกับ: <strong className="text-white font-bold">{selectedVehicle.brand} {selectedVehicle.model} ({selectedVehicle.year || 'ทุกปี'})</strong>
@@ -208,74 +211,70 @@ export const Products = () => {
               <button
                 type="button"
                 onClick={clearVehicleFilter}
-                className="text-[#FF6B6B] hover:underline font-bold"
+                className="min-h-[44px] px-2 text-[#FF6B6B] hover:text-white hover:underline font-bold inline-flex items-center"
               >
                 ล้างตัวกรองรุ่นรถ
               </button>
             </div>
           )}
 
-          {/* Smart Recommendation Banner Trigger */}
-          <div className="mt-4 p-4 rounded-2xl bg-gradient-to-r from-red-950/40 via-[#161B28] to-amber-950/30 border border-red-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-[#E63946]/20 text-[#FF6B6B] shrink-0">
-                <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
-              </div>
-              <div>
-                <span className="text-xs font-bold text-white block">
-                  เลือกไม่ถูก หรือไม่แน่ใจว่าจะต้องเปลี่ยนชิ้นไหน?
-                </span>
-                <p className="text-xs text-slate-300">
-                  ลองใช้ <strong className="text-amber-300">ระบบผู้ช่วยแนะนำอะไหล่อัจฉริยะ</strong> ค้นหาตามอาการ/ปัญหา หรือทำแบบประเมิน 3 ข้อ
-                </p>
-              </div>
-            </div>
-            <Link
-              to="/recommendations"
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shrink-0 cursor-pointer transition-all"
-            >
-              <span>เปิดระบบแนะนำสินค้า</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
           {/* Active Filter Chips */}
           {(filters.categories.length > 0 || filters.brands.length > 0 || searchQuery || filters.promoOnly) && (
-            <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-[#1C2230]">
-              <span className="text-xs text-slate-400 font-semibold">ตัวกรองที่เลือก:</span>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className="text-xs text-slate-400 font-semibold mr-1">ตัวกรองที่เลือก:</span>
 
               {searchQuery && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#181E2C] border border-slate-700 text-xs text-white">
+                <span className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-lg bg-[#181E2C] border border-slate-700 text-xs text-white">
                   <span>ค้นหา: {searchQuery}</span>
-                  <button onClick={() => setSearchQuery('')} className="hover:text-red-400">
-                    <X className="w-3 h-3" />
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    aria-label="ลบคำค้นหา"
+                    className="min-w-[28px] min-h-[28px] flex items-center justify-center rounded hover:bg-slate-700/80 hover:text-red-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               )}
 
               {filters.categories.map((c) => (
-                <span key={c} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500/15 border border-red-500/30 text-xs text-[#FF6B6B] font-bold">
+                <span key={c} className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-lg bg-red-500/15 border border-red-500/30 text-xs text-[#FF6B6B] font-bold">
                   <span>หมวด: {c}</span>
-                  <button onClick={() => removeCategoryFilter(c)} className="hover:text-white">
-                    <X className="w-3 h-3" />
+                  <button
+                    type="button"
+                    onClick={() => removeCategoryFilter(c)}
+                    aria-label={`ลบตัวกรองหมวดหมู่ ${c}`}
+                    className="min-w-[28px] min-h-[28px] flex items-center justify-center rounded hover:bg-red-500/20 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               ))}
 
               {filters.brands.map((b) => (
-                <span key={b} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-200">
+                <span key={b} className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-200">
                   <span>แบรนด์: {b}</span>
-                  <button onClick={() => removeBrandFilter(b)} className="hover:text-red-400">
-                    <X className="w-3 h-3" />
+                  <button
+                    type="button"
+                    onClick={() => removeBrandFilter(b)}
+                    aria-label={`ลบตัวกรองแบรนด์ ${b}`}
+                    className="min-w-[28px] min-h-[28px] flex items-center justify-center rounded hover:bg-slate-700 hover:text-red-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               ))}
 
               {filters.promoOnly && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-orange-500/20 border border-orange-500/30 text-xs text-orange-400 font-bold">
+                <span className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-lg bg-orange-500/20 border border-orange-500/30 text-xs text-orange-400 font-bold">
                   <span>เฉพาะโปรโมชั่น</span>
-                  <button onClick={() => setFilters(f => ({ ...f, promoOnly: false }))} className="hover:text-white">
-                    <X className="w-3 h-3" />
+                  <button
+                    type="button"
+                    onClick={() => setFilters(f => ({ ...f, promoOnly: false }))}
+                    aria-label="ยกเลิกเฉพาะโปรโมชั่น"
+                    className="min-w-[28px] min-h-[28px] flex items-center justify-center rounded hover:bg-orange-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </span>
               )}
@@ -283,12 +282,36 @@ export const Products = () => {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="text-xs text-[#FF6B6B] hover:underline font-bold ml-2"
+                className="min-h-[44px] px-2 text-xs text-[#FF6B6B] hover:text-white hover:underline font-bold inline-flex items-center ml-1"
               >
                 ล้างตัวกรองทั้งหมด
               </button>
             </div>
           )}
+
+          {/* Smart Recommendation Banner Trigger - Clean secondary utility */}
+          <div className="p-3.5 rounded-2xl bg-[#131722] border border-[#222A3B] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 shrink-0 border border-amber-500/20">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-white block">
+                  เลือกไม่ถูก หรือไม่แน่ใจว่าจะต้องเปลี่ยนชิ้นไหน?
+                </span>
+                <p className="text-xs text-slate-400">
+                  ลองใช้ <strong className="text-amber-300 font-medium">ระบบผู้ช่วยแนะนำอะไหล่อัจฉริยะ</strong> ค้นหาตามอาการ หรือทำแบบประเมิน 3 ข้อ
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/recommendations"
+              className="min-h-[40px] px-4 py-2 rounded-xl bg-[#1C2230] hover:bg-[#252E42] border border-[#2B354A] text-slate-200 hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 shrink-0 transition-colors"
+            >
+              <span>เปิดระบบแนะนำสินค้า</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#E63946]" />
+            </Link>
+          </div>
         </div>
 
         {/* Main Content Layout (Sidebar Filter + Product Grid) */}
@@ -311,26 +334,30 @@ export const Products = () => {
                 className="fixed inset-0 bg-black/80 backdrop-blur-sm"
                 onClick={() => setMobileFilterOpen(false)}
               />
-              <div className="relative w-4/5 max-w-xs bg-[#11151F] h-full p-5 overflow-y-auto z-10">
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                  <h3 className="font-bold text-white text-base">ตัวกรองสินค้า</h3>
-                  <button
-                    onClick={() => setMobileFilterOpen(false)}
-                    className="p-1 rounded-lg text-slate-400 hover:text-white"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+              <div className="relative w-4/5 max-w-xs bg-[#11151F] h-full p-5 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] overflow-y-auto z-10 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                    <h3 className="font-bold text-white text-base">ตัวกรองสินค้า</h3>
+                    <button
+                      type="button"
+                      onClick={() => setMobileFilterOpen(false)}
+                      aria-label="ปิดตัวกรองสินค้า"
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ProductFilter
+                    filters={filters}
+                    onFilterChange={setFilters}
+                    onResetFilters={handleResetFilters}
+                    totalResults={filteredProducts.length}
+                  />
                 </div>
-                <ProductFilter
-                  filters={filters}
-                  onFilterChange={setFilters}
-                  onResetFilters={handleResetFilters}
-                  totalResults={filteredProducts.length}
-                />
                 <button
                   type="button"
                   onClick={() => setMobileFilterOpen(false)}
-                  className="w-full mt-4 py-3 rounded-xl bg-[#E63946] text-white font-bold text-xs"
+                  className="w-full mt-4 min-h-[44px] py-3 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:from-[#FF4D5E] hover:to-[#D62839] active:scale-98 text-white font-bold text-xs shadow-lg shadow-red-950/40 transition-all cursor-pointer"
                 >
                   แสดงผล ({filteredProducts.length} รายการ)
                 </button>
