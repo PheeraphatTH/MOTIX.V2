@@ -67,7 +67,15 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-[#1F2636]">
-              <Link to="/" onClick={onClose} aria-label="MOTIX Home">
+              <Link
+                to="/"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  onClose();
+                }}
+                className="cursor-pointer"
+                aria-label="MOTIX Home"
+              >
                 <MotixBrandLogo size="sm" showTagline={true} />
               </Link>
               <button

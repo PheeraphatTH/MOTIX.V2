@@ -94,10 +94,18 @@ export const Navbar = ({ onOpenMobileMenu }) => {
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex items-center group shrink-0" aria-label="MOTIX Home">
+            <Link
+              to="/"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center group shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] rounded-xl p-1"
+              aria-label="MOTIX Home"
+            >
               <MotixBrandLogo size="md" showTagline={true} />
             </Link>
           </div>
+
 
           {/* 2. Quick Search Bar with Motorsport Style */}
           <form

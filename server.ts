@@ -81,7 +81,8 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
         from: `"MOTIX Auto Parts Store" <${SMTP_USER}>`,
         to: email.trim(),
         subject: 'ขอบคุณที่ติดตามข่าวสาร MOTIX! รับโค้ดส่วนลด 10% สำหรับคุณ',
-        text: `ยินดีต้อนรับสู่ MOTIX Auto Parts Store!\n\nขอบคุณที่ร่วมติดตามข่าวสารกับเรา คุณได้รับสิทธิ์ส่วนลด 10% ไม่มีขั้นต่ำ\nโค้ดส่วนลดของคุณ: MOTIX-NEWS10\n\nเข้าสู่หน้าร้านเพื่อเลือกซื้ออะไหล่แท้: ${detectedStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
+        text: `ยินดีต้อนรับสู่ MOTIX Auto Parts Store!\n\nขอบคุณที่ร่วมติดตามข่าวสารกับเรา คุณได้รับสิทธิ์ส่วนลด 10% ไม่มีขั้นต่ำ\nโค้ดส่วนลดของคุณ: MOTIX-NEWS10\n\nเข้าสู่หน้าร้านเพื่อเลือกซื้ออะไหล่แท้: ${detectedStoreUrl || 'https://pheeraphatth.github.io/MOTIX.V2'}\n\nMOTIX - Keep Your Ride Moving.`,
+
         html: htmlContent,
         headers: {
           'List-Unsubscribe': `<mailto:${SMTP_USER}?subject=unsubscribe>`,
@@ -147,7 +148,7 @@ app.post('/api/auth/register-email', async (req: Request, res: Response) => {
         from: `"MOTIX Member Club" <${SMTP_USER}>`,
         to: email.trim(),
         subject: `ยินดีต้อนรับ${subjectGreeting}! บัตรสมาชิกดิจิทัลและคูปองต้อนรับ 15%`,
-        text: `ยินดีต้อนรับสู่ MOTIX Member Club!\n\nขอต้อนรับคุณ ${name || 'สมาชิก MOTIX'} สู่คลับคนรักรถยนต์และมอเตอร์ไซค์\nโค้ดส่วนลดสมาชิกใหม่ 15%: MOTIX-WELCOME15\n\nเข้าสู่หน้าร้านเพื่อเริ่มใช้งาน: ${detectedStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
+        text: `ยินดีต้อนรับสู่ MOTIX Member Club!\n\nขอต้อนรับคุณ ${name || 'สมาชิก MOTIX'} สู่คลับคนรักรถยนต์และมอเตอร์ไซค์\nโค้ดส่วนลดสมาชิกใหม่ 15%: MOTIX-WELCOME15\n\nเข้าสู่หน้าร้านเพื่อเริ่มใช้งาน: ${detectedStoreUrl || 'https://pheeraphatth.github.io/MOTIX.V2'}\n\nMOTIX - Keep Your Ride Moving.`,
         html: htmlContent,
         headers: {
           'List-Unsubscribe': `<mailto:${SMTP_USER}?subject=unsubscribe>`,
@@ -210,7 +211,7 @@ app.post('/api/order/confirmation-email', async (req: Request, res: Response) =>
         from: `"MOTIX Auto Parts Store" <${SMTP_USER}>`,
         to: email,
         subject: `[ใบเสร็จคำสั่งซื้อ #${order.orderId}] สรุปข้อมูลการสั่งซื้ออะไหล่ MOTIX Auto Parts`,
-        text: `ใบเสร็จคำสั่งซื้อ #${order.orderId} จาก MOTIX Auto Parts Store\n\nขอบคุณสำหรับการสั่งซื้ออะไหล่กับ MOTIX ยอดรวมทั้งสิ้น: ฿${order.total}\nตรวจสอบสถานะการสั่งซื้อได้ที่: ${originStoreUrl || 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app'}\n\nMOTIX - Keep Your Ride Moving.`,
+        text: `ใบเสร็จคำสั่งซื้อ #${order.orderId} จาก MOTIX Auto Parts Store\n\nขอบคุณสำหรับการสั่งซื้ออะไหล่กับ MOTIX ยอดรวมทั้งสิ้น: ฿${order.total}\nตรวจสอบสถานะการสั่งซื้อได้ที่: ${originStoreUrl || 'https://pheeraphatth.github.io/MOTIX.V2'}\n\nMOTIX - Keep Your Ride Moving.`,
         html: htmlContent,
         headers: {
           'X-Mailer': 'MOTIX Automotive System',

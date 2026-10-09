@@ -419,6 +419,14 @@ export const CartProvider = ({ children }) => {
       setRegisteredUsers(updatedUsers);
       setUser(newUser);
 
+      // Write immediately to localStorage so data is NEVER lost even if user refreshes immediately
+      try {
+        localStorage.setItem('motix_registered_users', JSON.stringify(updatedUsers));
+        localStorage.setItem('motix_user', JSON.stringify(newUser));
+      } catch (e) {
+        console.warn('LocalStorage save error:', e);
+      }
+
       // Auto-update selected vehicle if provided
       if (newUser.vehicleModel && newUser.vehicleModel !== 'ยังไม่ได้ระบุ') {
         setSelectedVehicle(prev => ({
@@ -435,6 +443,7 @@ export const CartProvider = ({ children }) => {
       return { success: false, message: 'เกิดข้อผิดพลาดในการลงทะเบียน กรุณาลองใหม่อีกครั้ง' };
     }
   };
+
 
   /**
    * Login user with email & password check against localStorage registered users
@@ -463,26 +472,40 @@ export const CartProvider = ({ children }) => {
           return { success: true, user: demoUser };
         }
 
-        // Standard email/password check
-        const usersList = Array.isArray(registeredUsers) ? registeredUsers : DEFAULT_USERS;
+        // Standard email/password check: read fresh directly from localStorage if available
+        let usersList = Array.isArray(registeredUsers) ? registeredUsers : DEFAULT_USERS;
+        try {
+          const stored = localStorage.getItem('motix_registered_users');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              usersList = parsed;
+            }
+          }
+        } catch {}
+
         const found = usersList.find(
-          u => u?.email && String(u.email).toLowerCase() === email && String(u.password) === password
+          u => u?.email && String(u.email).toLowerCase().trim() === email && String(u.password) === password
         );
 
         if (found) {
           setUser(found);
+          try {
+            localStorage.setItem('motix_user', JSON.stringify(found));
+          } catch {}
           showToast(`ยินดีต้อนรับคุณ ${found.name || 'สมาชิก'} เข้าสู่ระบบ`, 'success');
           return { success: true, user: found };
         } else {
           // Check if email exists but wrong password
           const emailExists = usersList.some(
-            u => u?.email && String(u.email).toLowerCase() === email
+            u => u?.email && String(u.email).toLowerCase().trim() === email
           );
           const errorMsg = emailExists ? 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง' : 'ไม่พบบัญชีผู้ใช้นี้ กรุณาตรวจสอบอีเมลหรือสมัครสมาชิกใหม่';
           showToast(errorMsg, 'error');
           return { success: false, message: errorMsg };
         }
       }
+
 
       // Backwards compatible signature: loginUser(email, name)
       const emailStr = String(credentials || 'user@example.com');

@@ -72,16 +72,17 @@ export const Checkout = () => {
 
   // Sync with user profile on login or change
   useEffect(() => {
-    if (user) {
+    if (user && user.email) {
       setFormData(prev => ({
         ...prev,
-        fullName: prev.fullName || user.name || '',
-        phone: prev.phone || user.phone || '',
-        email: prev.email || user.email || '',
-        vehicleNote: prev.vehicleNote || (user.vehicleModel ? `${user.vehicleModel} (เช็กสเปกอะไหล่ตรงรุ่น)` : prev.vehicleNote),
+        fullName: user.name || prev.fullName || '',
+        phone: user.phone || prev.phone || '',
+        email: user.email,
+        vehicleNote: user.vehicleModel ? `${user.vehicleModel} (เช็กสเปกอะไหล่ตรงรุ่น)` : prev.vehicleNote,
       }));
     }
   }, [user]);
+
 
   // Shipping methods with realistic pricing
   const SHIPPING_OPTIONS = [
@@ -258,6 +259,8 @@ export const Checkout = () => {
       ? 'READY-FOR-PICKUP' 
       : `${prefix}${Math.floor(10000000 + Math.random() * 90000000)}`;
 
+    const recipientEmail = String(formData.email || user?.email || '').trim();
+
     const newOrder = {
       orderId: generatedOrderId,
       date: new Date().toLocaleDateString('th-TH', {
@@ -272,7 +275,10 @@ export const Checkout = () => {
       discount: cartDiscount,
       shipping: calculatedShippingFee,
       total: grandTotal,
-      shippingAddress: formData,
+      shippingAddress: {
+        ...formData,
+        email: recipientEmail,
+      },
       paymentMethod,
       shippingMethod,
       shippingMethodName: currentShippingOption.name,
@@ -280,6 +286,7 @@ export const Checkout = () => {
       trackingNumber: generatedTracking,
       paymentSlipAttached: paymentSlipUploaded,
     };
+
 
     setOrderComplete(newOrder);
     setIsProcessing(false);

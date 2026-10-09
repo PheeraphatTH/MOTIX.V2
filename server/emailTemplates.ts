@@ -48,11 +48,15 @@ export interface OrderEmailData {
   storeUrl?: string;
 }
 
-// Fallback live store URL if none is provided
-export const DEFAULT_STORE_URL = 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app';
+// Fallback live store URL if none is provided - defaults to GitHub Pages live store
+export const DEFAULT_STORE_URL = 'https://pheeraphatth.github.io/MOTIX.V2';
 
 export function resolveStoreUrl(customUrl?: string): string {
   if (customUrl && typeof customUrl === 'string' && customUrl.trim()) {
+    // If customUrl contains old dead AI studio domain, replace with GitHub Pages
+    if (customUrl.includes('ais-pre-') || customUrl.includes('run.app')) {
+      return DEFAULT_STORE_URL;
+    }
     return customUrl.trim().replace(/\/index\.html$/i, '').replace(/\/+$/, '');
   }
   if (typeof process !== 'undefined' && process.env?.STORE_PUBLIC_URL) {
@@ -60,6 +64,7 @@ export function resolveStoreUrl(customUrl?: string): string {
   }
   return DEFAULT_STORE_URL;
 }
+
 
 /**
  * Accurately constructs a direct link to any sub-page or filter of the MOTIX store.

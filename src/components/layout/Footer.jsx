@@ -199,9 +199,17 @@ export const Footer = () => {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="inline-block" aria-label="MOTIX Home">
+            <Link
+              to="/"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-block cursor-pointer"
+              aria-label="MOTIX Home"
+            >
               <MotixBrandLogo size="lg" showTagline={true} />
             </Link>
+
             
             <p className="text-xs font-bold tracking-widest text-[#E63946] uppercase">
               KEEP YOUR RIDE MOVING — ให้รถของคุณพร้อมเดินทางต่อ

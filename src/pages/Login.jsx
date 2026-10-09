@@ -26,11 +26,12 @@ export const Login = () => {
   const isFromCheckout = redirectTarget.includes('checkout');
 
   const { loginUser, registeredUsers } = useCart();
-  const [email, setEmail] = useState('somchai@motix.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,42 +103,40 @@ export const Login = () => {
           </p>
         </div>
 
-        {/* Demo Quick Button for mini project showcase */}
+        {/* Demo / Quick Select Accounts */}
         <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-amber-300 font-bold">
             <span className="flex items-center gap-1.5">
               <UserCheck className="w-4 h-4 text-amber-400" />
-              <span>บัญชีทดสอบระบบ (Demo Accounts)</span>
+              <span>บัญชีในระบบที่พร้อมเข้าใช้งาน ({registeredUsers?.length || 2} บัญชี)</span>
             </span>
-            <span className="text-[10px] text-amber-400/80">กดเพื่อล็อกอินทันที</span>
+            <span className="text-[10px] text-amber-400/80">คลิกเพื่อกรอกอัตโนมัติ</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickDemoLogin('somchai@motix.com', 'password123')}
-              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300">
-                <Car className="w-3.5 h-3.5 text-red-400 shrink-0" />
-                <span className="truncate">สมชาย มั่นคง</span>
-              </div>
-              <span className="text-[9px] text-slate-400 block truncate">Toyota (Gold - 350 แต้ม)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickDemoLogin('anan.biker@motix.com', 'password123')}
-              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300">
-                <Bike className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span className="truncate">อนันต์ สายซิ่ง</span>
-              </div>
-              <span className="text-[9px] text-slate-400 block truncate">Honda CBR (820 แต้ม)</span>
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-0.5">
+            {(registeredUsers || []).slice(0, 4).map((u) => (
+              <button
+                key={u.id || u.email}
+                type="button"
+                onClick={() => handleQuickDemoLogin(u.email, u.password || 'password123')}
+                className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-left transition-all cursor-pointer group"
+              >
+                <div className="flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300">
+                  {u.vehicleType === 'motorcycle' || u.vehicleType === 'bike' ? (
+                    <Bike className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                  ) : (
+                    <Car className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                  )}
+                  <span className="truncate">{u.name}</span>
+                </div>
+                <span className="text-[9px] text-slate-400 block truncate font-mono">
+                  {u.email}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
+
 
         {/* Error Alert */}
         {errorMessage && (
